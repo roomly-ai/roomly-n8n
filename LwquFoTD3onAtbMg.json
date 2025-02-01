@@ -1,0 +1,845 @@
+{
+  "active": false,
+  "connections": {
+    "find_for_rent_rooms": {
+      "main": [
+        [
+          {
+            "node": "loop_over_each_listings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "loop_over_each_listings": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "loop_over_each_listings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "update_application_form_option",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "update_entry_email_autocom",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "update_NTV_email_autocom",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "renter_move_in": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "find_for_rent_rooms",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "renter_moved_out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "move_type updated": {
+      "main": [
+        [
+          {
+            "node": "renter_move_in",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "email_updated": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "renter_moved_out": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "find_for_rent_rooms",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update_NTV_email_autocom": {
+      "main": [
+        [
+          {
+            "node": "update_exit_email_autocom",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update_exit_email_autocom": {
+      "main": [
+        [
+          {
+            "node": "update_maintenance_email_autocom",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update_entry_email_autocom": {
+      "main": [
+        [
+          {
+            "node": "update_NTV_email_autocom",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-01-08T14:09:47.574Z",
+  "id": "LwquFoTD3onAtbMg",
+  "meta": null,
+  "name": "set_jotform_parameter",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.jotform.com/form/243541205783051/question/9",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "apiKey",
+              "value": "115e27fb33dd2b810f8c546e87897875"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "question[items]",
+              "value": "={{ $json.email.join(\"|\") }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -100,
+        -440
+      ],
+      "id": "a5740ed7-4a39-49a6-bbe0-bda1e5235a56",
+      "name": "update_NTV_email_autocom"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.jotform.com/form/243541205783051/question/9",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "apiKey",
+              "value": "115e27fb33dd2b810f8c546e87897875"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "question[items]",
+              "value": "nikhil.khanna9@gmail.com|0415262170@touchsms.email|ntienthanh999@gmail.com|featherjoe30727@yahoo.com.au|0431322513@touchsms.email|sart_za55@hotmail.com|rituraj.dutta00@gmail.com|aushak20@gmail.com|wnsgml6986@gmail.com|nn621220@gmail.com|hngc269@gmail.com|ehgml331@naver.com|s.balaggan8@gmail.com|niky.nikki@gmail.com|awasthynishtha99@gmail.com|janhvirajsingh@gmail.com|m999.akn11@gmail.com|pfirsich.parfum@gmail.com|rudtls357@gmail.com|y3737ytt@naver.com|wjdwlsdn8520@gmail.com|ghkdwlals5729@gmail.com|da9820@naver.com|alimusawi90@gmail.com|rosyidah1977@gmail.com|tlatjdgh923@gmail.com|qkrrhkdgml200@gmail.com|marcocantarero1999@gmail.com|tanjukocamaz@gmail.com|takahasiryohei@icloud.com|cindystepord.cs@gmail.com|javier.monsalve.77@outlook.com|caballerorichard047@gmail.com|estefania.bernabeu30@gmail.com|siddhartha_varshney@yahoo.com|yasmeenwalia31081998@gmail.com|ritambhowmik.19@gmail.com|uran1998.9.21@icloud.com|ghaisonia7@gmail.com|kaurdeep00017@gmail.com|rituraj.dutta00@gmail.com|sart_za55@hotmail.com|ebubekirsever1625@gmail.com|hakanzun@gmail.com|batuhankundak1996125@gmail.com|inderiaarmbrister2707@gmail.com|abenyann@gmail.com|lucklouise4@gmail.com|kje405@naver.com|flionnwalshleone@gmail.com|kenza.hileret@gmail.com|john.l.fly.kr@gmail.com|yukinoel54321@gmail.com|yerin9088@gmail.com|s9540221@gmail.com|ok2ykr@gmail.com|weiyiwu198906@gmail.com|tosssks@gmail.com|pfirsich.parfum@gmail.com|syoon9502@gmail.com|hongseung0317@gmail.com|yigitomar@icloud.com|ogncimen@gmail.com|m999.akn11@gmail.com|mmsloth1997@gmail.com|rudtls357@gmail.com|clzls623@gmail.com|srr200026@gmail.com|netty.prvt@gmail.com|jinsolpia@naver.com|laismelofranca@hotmail.com|sott57@gmx.de|onurcanzengin@hotmail.com|seagull826@gmail.com|dnztncr10@gmail.com|azizokansari@gmail.com|wilawan2595@gmail.com|abdulmyakub@gmail.com|gunerfirat@outlook.com.tr|turkmen1881@outlook.com|tnqlssom407@gmail.com|fantasista1005@gmail.com|shunshun.43@gmail.com|yuna3104love@gmail.com|ij84k7ynd2@gmail.com|karasu.kanasubi@gmail.com|nanisru7@hotmail.com|nataliavasv9@gmail.com|sehmuscicek33@gmail.com|sametcikikci@hotmail.com|lopesdani4@gmail.com|ao.970203@gmail.com|a.miiinko3@gmail.com|ozdemiirhazal@gmail.com|maruno130@gmail.com|psy21235@naver.com|anthony-blondet@hotmail.fr|sarah.stierle@t-online.de|gomezcjoseluis@gmail.com|alperentopaloglu0022@gmail.com|sierrita2013@hotmail.com|tomtam_jok@hotmail.com|erensolakk@icloud.com|anna.hapczynski@yahoo.de|jasinski.szymon@yahoo.com|lxllxo@naver.com|sezenbaser@gmail.com|luisa.moreno002@gmail.com|Perolotud1155@gmail.com|ahnick873@gmail.com|neojapanese88@gmail.com|tam.teamh@gmail.com|seonhwa1110@gmail.com|lynnwaran@gmail.com|pia.nmnl.ryu27@gmail.com|bvatandaslar@hotmail.com|arciosakae@gmail.com|ninanurhass@gmail.com|pritysoon@gmail.com|djvnfjf1@gmail.com|coskunesmahan@gmail.com|bahadiradatepe@hotmail.com|sammclean277@gmail.com|pinst91@gmail.com|glennmontoyav@gmail.com|mrymaydemir41@gmail.com|kubracelik.au@gmail.com|luccianoagostini@gmail.com|omercannozgul@gmail.com|hocaogluumetehan@gmail.com|derl7611@gmail.com|aaanba004@gmail.com|sujilee0326@gmail.com|rdr.vasquez@gmail.com|naoki.koyama.1120@gmail.com|petiauxanatole04@gmail.com|oswaldoesquivia23@gmail.com|lennypool@hotmail.com|kevin.tran@estaca.eu|yagmur.yuksel4@hotmail.com|avbahargungor@gmail.com|zeeaugustaa@gmail.com|ohjujanni@gmail.com|lopesdani4@gmail.com|rosyidah1977@gmail.com|orkungzn@gmail.com|fabiangalvisc@gmail.com|mertcanngurgull@gmail.com|zinc.chang8259@gmail.com|carl.froblom@hotmail.com|joshua.onyango13@yahoo.de|ij84k7ynd2@gmail.com|s.mikiko.0530@gmail.com|xpelcy91@gmail.com|raniellyscheffer@gmail.com|arq.leonardorivera@gmail.com|gy9826@naver.com|chwh3720@gmail.com|mateo.carim13@gmail.com|baraniscani@gmail.com|krlosgarciar@gmail.com|marlygallardor@gmail.com|apple5boxes0@gmail.com|7mood3879@gmail.com|csanchezmerino99@gmail.com|lopesdani4@gmail.com|kkeita000921@icloud.com|yuhiijima@gmail.com|vunhatlong02@gmail.com|370996415@qq.com|dshangyuan72@gmail.com|alexande26792@gmail.com|feraysrt@gmail.com|brayanlarios55@gmail.com|asai.naitei@gmail.com|dsuadiye@gmail.com|arq.leonardorivera@gmail.com|yone0121@keio.jp|kevin.tran@estaca.eu|giriate_madam@yahoo.co.jp|joshuaasri@gmail.com|erensolakk@icloud.com|g.eren39@icloud.com|mujge.ozturk@outlook.com|lisa.t0032@gmail.com|pringleinau@gmail.com|yuuri02180213@gmail.com|rivisatr@gmail.com|mete686888@icloud.com|carlos.281298@outlook.com|gmshark99999@gmail.com|kayrakiran98@gmail.com|andac.arslan81@gmail.com|juan.andres-@hotmail.com|matt.park71771@gmail.com|shi.rx62@gmail.com|ardaural26@gmail.com|jsaavedra.bp@gmail.com|boubnane.1120@gmail.com|melst02anna@gmail.com|lxllxo@naver.com|sumina0830@yahoo.co.jp|mardinlibariscan@gmail.com|hirakawamei@gmail.com|cnmnwt@gmail.com|stevencamelogomez@gmail.com|samerhalnajjar@gmail.com|ysfymn1994@gmail.com|sahill.paul@gmail.com|enesaltikulac26@gmail.com|melissa.rouabah@hotmail.com|tlagusals@gmail.com|fournierflorian11@gmail.com|ikuma370465@gmail.com|bernarinc@gmail.com|staargazzing@gmail.com|tommy.argibay06@gmail.com|iwillbehappy7@gmail.com|sbeie027@gmail.com|ovuncakin@gmail.com|melik9493@hotmail.com|cgent20@gmail.com|minutolaadriano6@gmail.com|mitchelcameronunai@gmail.com|hs08_run@yahoo.co.jp|shene_ash@yahoo.com|aishenans_11@yahoo.com|tgj0729@gmail.com|eda.kus@hotmail.com|omfaoz@icloud.com|berk.akoglu@gmail.com|bernardes.nicolas1@gmail.com|aya.ca.619@gmail.com|halit.balkan@icloud.com|tathetata@gmail.com|fudgml9026@gmail.com|okawariho00@gmail.com|mtsabimayu@gmail.com|rosiesired@outlook.com|emilycryans@gmail.com|rogerparis2001@gmail.com|thomaspaquet63430@gmail.com|noa.ambrosse16@gmail.com|dogancan1n@gmail.com|rojassaezdiego@gmail.com|gingirarko619@gmail.com|zavattarogiulio@gmail.com|javier.lt.1999@gmail.com|i2345gcmo@gmail.com|raihanrafi2801@gmail.com|frhtatn1903@gmail.com|bobbie841728901@gmail.com|bernarinc@gmail.com|nudaisy27@gmail.com|cocomiltirofi2525@gmail.com|jesse@codde.dev|lucia.f.anastasio@gmail.com|victor.hrreis92@gmail.com|marineharvier@gmail.com|andreaortegaorduz05@gmail.com|rioredsox@icloud.com|mehmetgoren1905@gmail.com|aysegulturanalp1@gmail.com|quentin.gsf@gmail.com|quentin-teixeira@live.fr|arq.leonardorivera@gmail.com|hsynalmhry4@gmail.com|rosealima.wade@gmail.com|alvaroduraan@gmail.com|Perolotud1155@gmail.com|ilias.oumami@gmail.com|fahadaljbar262@gmail.com|muhammed201644@gmail.com|idrisy.1993@hotmail.com|ibrahimekinci36@gmail.com|saud.9741@hotmail.com|brrivas.tiznado@gmail.com|agodoyferia@gmail.com|ana-xio@hotmail.com|ufukozzbek@gmail.com|dytoguzhanguray@gmail.com|bernardes.nicolas1@gmail.com|duniagarcia90@gmail.com|gocmenoguzhan07@gmail.com|be.burakerdogan@gmail.com|ivanpernas98@gnail.com|burcin_gultekin@hotmail.com|ayano.styles.e@gmail.com|hugo-chapeau@hotmail.fr|azelmeunier@gmail.com|otsurika2@gmail.com|mehmetfurkansorkun@gmail.com|russo.alessandro98@gmail.com|barismete1@gmail.com|lucaschimenti@hotmail.com|sdy3432@outlook.com|tncshii926@gmail.com|singhjoydeep03@gmail.com|karanjotsingh2121@gmail.com|oasr9503@gmail.com|markpedroso@gmail.com|cinarardasedat@gmail.com|c.demirbaglar@hotmail.com|mael.michel92@gmail.com|mertalilli3@gmail.com|habusaq27@gmail.com|callumwilliams2001@gmail.com|azelmeunier@gmail.com|dkfltn1998@gmail.com|mustafaa.ozz01@gmail.com|eneszerin@icloud.com|eduardo.navarroa95@gmail.com|longechamp.damien@gmail.com|sarbojitsarker@gmail.com|albalawii914@gmail.com|mandy.thombre@gmail.com|jsaavedra.bp@gmail.com|take8571@icloud.com|alshekhi.1995@gmail.com|cevikugursefa@gmail.com|cgent20@gmail.com|codud5823@gmail.com|sylvain-reynaud@hotmail.com|cansgl.3531@icloud.com|ugurannac@gmail.com|aysegulturanalp1@gmail.com|dewanaditya76@gmail.com|sei.syoguo@gmail.com|melihbahadirhanbilgu@gmail.com|lubowen4765@gmail.com|gianluca.sbrolli@icloud.com|andrescdlm346@gmail.com|tarikekincii@outlook.com|r.xxrisa1023@gmail.com|nielsrq@gmail.com|kt.lam@live.com|div2into@gmail.com|wendy890705@gmail.com|endopopirum@gmail.com|heeminmg@gmail.com|jay.vic.kr@gmail.com|aka81577@gmail.com|samerhalnajjar@gmail.com|nudaisy27@gmail.com|dogan_yuruk@icloud.com|cinarardasedat@gmail.com|sahinramazan211@gmail.com|1076513706@qq.com|max35370@gmail.com|belenplaza.v@gmail.com|hina0423nzlove@gmail.com|ansrud876@gmail.com|raihanrafi2801@gmail.com|sarbojitsarker@gmail.com|cenk.tasko.89@gmail.com|brianatanacio@gmail.com|riyal.maker@gmail.com|lau.amaya1210@gmail.com|senaakaradenizz@gmail.com|ramirezjubileen@gmail.com|fanzhongqianxun7@gmail.com|sirkang2012@gmail.com|ajrrakan@gmail.com|cesar.marin9707@gmail.com|michellebabu18@gmail.com|sangambasnet971@gmail.com|hazaldeniz1925@gmail.com|barryrayallen13@gmail.com|danilo1264.dc@gmail.com|stand.by.6256@gmail.com|haruka0925271211@icloud.com|muhammed201644@gmail.com|alshekhi.1995@gmail.com|abdulkadirturan@hotmail.com|erika.au.nz@gmail.com|g.ramirezqui@gmail.com|basilthomas225@gmail.com|zelmad.taik@gmail.com|enesaltikulac26@gmail.com|barbarosarslanerkal@gmail.com|sadikbostann@gmail.com|ryryk808@gmail.com|Andresmiranda664@gmail.com|jutian@student.unimelb.edu.au|michael_tkachuk@hotmail.com|trananna329@gmail.com|lola.chatainier@gmail.com|kimchhaykd@gmail.com|agl.vipul94@gmail.com|keviandrey@hotmail.com|sithum.sc@gmail.com|maxence.shan@gmail.com|warrickcastillo13@gmail.com|furkangenevlioglu@gmail.com|travishall2323@gmail.com|rickyhsu8668@gmail.com|samed.karapinar99@gmail.com|FAISAL2005.FR@GMAIL.COM|rebuyonlj@gmail.com|ceviksait5@gmail.com|huzaifafayyazg@gmail.com|laranya.oberoi@gamil.com|andres.pinzonardila@gmail.com|mahzabeen.alam.deh@ulab.edu.bd|mahzabeen.alam.deh@ulab.edu.bd|mateusmoresco14@hotmail.com|pedaysonam89@gmail.com|krishthikv@gmail.com|cacdacchristineg@gmail.com|elenarizo21@gmail.com|metinyermez@gmail.com|mustafaa.ozz01@gmail.com|melihbahadirhanbilgu@gmail.com|mohmadrah@yahoo.com|tareqkishawi@gmail.com|massimocarta511@gmail.com|belenplaza.v@gmail.com|ahmeetyuce.16@gmail.com|dogancan1n@gmail.com|nevastella@gmail.com|beausuthima@gmail.com|ellaoxford7@yahoo.co.uk|desmv@icloud.com|zbd543@gmail.com|hughesjiggs@gmail.com|sujansolta@gmail.com|matt50502@gmail.com|rewrih8685@gmail.com|ilkaycevizli@gmail.com|ngamze.uz@gmail.com|kbatuskilic@gmail.com|kimchhaykd@gmail.com|meteliciouss@gmail.com|brendaaparedes8@gmail.com|marcaz8367@gmail.com|gzllondey@gmail.com|joycecilagan@gmail.com|akifsharif303@gmail.com|atahancelebi98@gmail.com|s3622472@student.rmit.edu.au|diegoespinoza1993@gmail.com|sebastianrb1998@gmail.com|mariobatzesco@hotmail.com|shokocheer0809@icloud.com|omaralkayed16@gmail.com|nataliaoto@wp.pl|lorenzo.maniaci@me.com|steven.spignese@gmail.com|sadikkihicham03@gmail.com|lucac1162@gmail.com|dani.mihani@gmail.com|arq.camilobautista@gmail.com|joseandresestupinanr@gmail.com|maillard.jeanphilippe1@gmail.com|emreatuk.ea@gmail.com|fl.molina1993@gmail.com|harly822@gmail.com|damaris.palma25@gmail.com|basilsunnyxr@gmail.com|reehaasma29@gmail.com|ruben.embarek19@gmail.com|hannahterrill@outlook.com|hughesjiggs@gmail.com|diiaanaaph@gmail.com|adamhawkess2001@hotmail.com|lino.garret@gmail.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        360,
+        -440
+      ],
+      "id": "195804b5-5686-432e-a4c3-a9f336f91c8a",
+      "name": "update_maintenance_email_autocom"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.jotform.com/form/243541205783051/question/9",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "apiKey",
+              "value": "115e27fb33dd2b810f8c546e87897875"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "question[items]",
+              "value": "nikhil.khanna9@gmail.com|0415262170@touchsms.email|ntienthanh999@gmail.com|featherjoe30727@yahoo.com.au|0431322513@touchsms.email|sart_za55@hotmail.com|rituraj.dutta00@gmail.com|aushak20@gmail.com|wnsgml6986@gmail.com|nn621220@gmail.com|hngc269@gmail.com|ehgml331@naver.com|s.balaggan8@gmail.com|niky.nikki@gmail.com|awasthynishtha99@gmail.com|janhvirajsingh@gmail.com|m999.akn11@gmail.com|pfirsich.parfum@gmail.com|rudtls357@gmail.com|y3737ytt@naver.com|wjdwlsdn8520@gmail.com|ghkdwlals5729@gmail.com|da9820@naver.com|alimusawi90@gmail.com|rosyidah1977@gmail.com|tlatjdgh923@gmail.com|qkrrhkdgml200@gmail.com|marcocantarero1999@gmail.com|tanjukocamaz@gmail.com|takahasiryohei@icloud.com|cindystepord.cs@gmail.com|javier.monsalve.77@outlook.com|caballerorichard047@gmail.com|estefania.bernabeu30@gmail.com|siddhartha_varshney@yahoo.com|yasmeenwalia31081998@gmail.com|ritambhowmik.19@gmail.com|uran1998.9.21@icloud.com|ghaisonia7@gmail.com|kaurdeep00017@gmail.com|rituraj.dutta00@gmail.com|sart_za55@hotmail.com|ebubekirsever1625@gmail.com|hakanzun@gmail.com|batuhankundak1996125@gmail.com|inderiaarmbrister2707@gmail.com|abenyann@gmail.com|lucklouise4@gmail.com|kje405@naver.com|flionnwalshleone@gmail.com|kenza.hileret@gmail.com|john.l.fly.kr@gmail.com|yukinoel54321@gmail.com|yerin9088@gmail.com|s9540221@gmail.com|ok2ykr@gmail.com|weiyiwu198906@gmail.com|tosssks@gmail.com|pfirsich.parfum@gmail.com|syoon9502@gmail.com|hongseung0317@gmail.com|yigitomar@icloud.com|ogncimen@gmail.com|m999.akn11@gmail.com|mmsloth1997@gmail.com|rudtls357@gmail.com|clzls623@gmail.com|srr200026@gmail.com|netty.prvt@gmail.com|jinsolpia@naver.com|laismelofranca@hotmail.com|sott57@gmx.de|onurcanzengin@hotmail.com|seagull826@gmail.com|dnztncr10@gmail.com|azizokansari@gmail.com|wilawan2595@gmail.com|abdulmyakub@gmail.com|gunerfirat@outlook.com.tr|turkmen1881@outlook.com|tnqlssom407@gmail.com|fantasista1005@gmail.com|shunshun.43@gmail.com|yuna3104love@gmail.com|ij84k7ynd2@gmail.com|karasu.kanasubi@gmail.com|nanisru7@hotmail.com|nataliavasv9@gmail.com|sehmuscicek33@gmail.com|sametcikikci@hotmail.com|lopesdani4@gmail.com|ao.970203@gmail.com|a.miiinko3@gmail.com|ozdemiirhazal@gmail.com|maruno130@gmail.com|psy21235@naver.com|anthony-blondet@hotmail.fr|sarah.stierle@t-online.de|gomezcjoseluis@gmail.com|alperentopaloglu0022@gmail.com|sierrita2013@hotmail.com|tomtam_jok@hotmail.com|erensolakk@icloud.com|anna.hapczynski@yahoo.de|jasinski.szymon@yahoo.com|lxllxo@naver.com|sezenbaser@gmail.com|luisa.moreno002@gmail.com|Perolotud1155@gmail.com|ahnick873@gmail.com|neojapanese88@gmail.com|tam.teamh@gmail.com|seonhwa1110@gmail.com|lynnwaran@gmail.com|pia.nmnl.ryu27@gmail.com|bvatandaslar@hotmail.com|arciosakae@gmail.com|ninanurhass@gmail.com|pritysoon@gmail.com|djvnfjf1@gmail.com|coskunesmahan@gmail.com|bahadiradatepe@hotmail.com|sammclean277@gmail.com|pinst91@gmail.com|glennmontoyav@gmail.com|mrymaydemir41@gmail.com|kubracelik.au@gmail.com|luccianoagostini@gmail.com|omercannozgul@gmail.com|hocaogluumetehan@gmail.com|derl7611@gmail.com|aaanba004@gmail.com|sujilee0326@gmail.com|rdr.vasquez@gmail.com|naoki.koyama.1120@gmail.com|petiauxanatole04@gmail.com|oswaldoesquivia23@gmail.com|lennypool@hotmail.com|kevin.tran@estaca.eu|yagmur.yuksel4@hotmail.com|avbahargungor@gmail.com|zeeaugustaa@gmail.com|ohjujanni@gmail.com|lopesdani4@gmail.com|rosyidah1977@gmail.com|orkungzn@gmail.com|fabiangalvisc@gmail.com|mertcanngurgull@gmail.com|zinc.chang8259@gmail.com|carl.froblom@hotmail.com|joshua.onyango13@yahoo.de|ij84k7ynd2@gmail.com|s.mikiko.0530@gmail.com|xpelcy91@gmail.com|raniellyscheffer@gmail.com|arq.leonardorivera@gmail.com|gy9826@naver.com|chwh3720@gmail.com|mateo.carim13@gmail.com|baraniscani@gmail.com|krlosgarciar@gmail.com|marlygallardor@gmail.com|apple5boxes0@gmail.com|7mood3879@gmail.com|csanchezmerino99@gmail.com|lopesdani4@gmail.com|kkeita000921@icloud.com|yuhiijima@gmail.com|vunhatlong02@gmail.com|370996415@qq.com|dshangyuan72@gmail.com|alexande26792@gmail.com|feraysrt@gmail.com|brayanlarios55@gmail.com|asai.naitei@gmail.com|dsuadiye@gmail.com|arq.leonardorivera@gmail.com|yone0121@keio.jp|kevin.tran@estaca.eu|giriate_madam@yahoo.co.jp|joshuaasri@gmail.com|erensolakk@icloud.com|g.eren39@icloud.com|mujge.ozturk@outlook.com|lisa.t0032@gmail.com|pringleinau@gmail.com|yuuri02180213@gmail.com|rivisatr@gmail.com|mete686888@icloud.com|carlos.281298@outlook.com|gmshark99999@gmail.com|kayrakiran98@gmail.com|andac.arslan81@gmail.com|juan.andres-@hotmail.com|matt.park71771@gmail.com|shi.rx62@gmail.com|ardaural26@gmail.com|jsaavedra.bp@gmail.com|boubnane.1120@gmail.com|melst02anna@gmail.com|lxllxo@naver.com|sumina0830@yahoo.co.jp|mardinlibariscan@gmail.com|hirakawamei@gmail.com|cnmnwt@gmail.com|stevencamelogomez@gmail.com|samerhalnajjar@gmail.com|ysfymn1994@gmail.com|sahill.paul@gmail.com|enesaltikulac26@gmail.com|melissa.rouabah@hotmail.com|tlagusals@gmail.com|fournierflorian11@gmail.com|ikuma370465@gmail.com|bernarinc@gmail.com|staargazzing@gmail.com|tommy.argibay06@gmail.com|iwillbehappy7@gmail.com|sbeie027@gmail.com|ovuncakin@gmail.com|melik9493@hotmail.com|cgent20@gmail.com|minutolaadriano6@gmail.com|mitchelcameronunai@gmail.com|hs08_run@yahoo.co.jp|shene_ash@yahoo.com|aishenans_11@yahoo.com|tgj0729@gmail.com|eda.kus@hotmail.com|omfaoz@icloud.com|berk.akoglu@gmail.com|bernardes.nicolas1@gmail.com|aya.ca.619@gmail.com|halit.balkan@icloud.com|tathetata@gmail.com|fudgml9026@gmail.com|okawariho00@gmail.com|mtsabimayu@gmail.com|rosiesired@outlook.com|emilycryans@gmail.com|rogerparis2001@gmail.com|thomaspaquet63430@gmail.com|noa.ambrosse16@gmail.com|dogancan1n@gmail.com|rojassaezdiego@gmail.com|gingirarko619@gmail.com|zavattarogiulio@gmail.com|javier.lt.1999@gmail.com|i2345gcmo@gmail.com|raihanrafi2801@gmail.com|frhtatn1903@gmail.com|bobbie841728901@gmail.com|bernarinc@gmail.com|nudaisy27@gmail.com|cocomiltirofi2525@gmail.com|jesse@codde.dev|lucia.f.anastasio@gmail.com|victor.hrreis92@gmail.com|marineharvier@gmail.com|andreaortegaorduz05@gmail.com|rioredsox@icloud.com|mehmetgoren1905@gmail.com|aysegulturanalp1@gmail.com|quentin.gsf@gmail.com|quentin-teixeira@live.fr|arq.leonardorivera@gmail.com|hsynalmhry4@gmail.com|rosealima.wade@gmail.com|alvaroduraan@gmail.com|Perolotud1155@gmail.com|ilias.oumami@gmail.com|fahadaljbar262@gmail.com|muhammed201644@gmail.com|idrisy.1993@hotmail.com|ibrahimekinci36@gmail.com|saud.9741@hotmail.com|brrivas.tiznado@gmail.com|agodoyferia@gmail.com|ana-xio@hotmail.com|ufukozzbek@gmail.com|dytoguzhanguray@gmail.com|bernardes.nicolas1@gmail.com|duniagarcia90@gmail.com|gocmenoguzhan07@gmail.com|be.burakerdogan@gmail.com|ivanpernas98@gnail.com|burcin_gultekin@hotmail.com|ayano.styles.e@gmail.com|hugo-chapeau@hotmail.fr|azelmeunier@gmail.com|otsurika2@gmail.com|mehmetfurkansorkun@gmail.com|russo.alessandro98@gmail.com|barismete1@gmail.com|lucaschimenti@hotmail.com|sdy3432@outlook.com|tncshii926@gmail.com|singhjoydeep03@gmail.com|karanjotsingh2121@gmail.com|oasr9503@gmail.com|markpedroso@gmail.com|cinarardasedat@gmail.com|c.demirbaglar@hotmail.com|mael.michel92@gmail.com|mertalilli3@gmail.com|habusaq27@gmail.com|callumwilliams2001@gmail.com|azelmeunier@gmail.com|dkfltn1998@gmail.com|mustafaa.ozz01@gmail.com|eneszerin@icloud.com|eduardo.navarroa95@gmail.com|longechamp.damien@gmail.com|sarbojitsarker@gmail.com|albalawii914@gmail.com|mandy.thombre@gmail.com|jsaavedra.bp@gmail.com|take8571@icloud.com|alshekhi.1995@gmail.com|cevikugursefa@gmail.com|cgent20@gmail.com|codud5823@gmail.com|sylvain-reynaud@hotmail.com|cansgl.3531@icloud.com|ugurannac@gmail.com|aysegulturanalp1@gmail.com|dewanaditya76@gmail.com|sei.syoguo@gmail.com|melihbahadirhanbilgu@gmail.com|lubowen4765@gmail.com|gianluca.sbrolli@icloud.com|andrescdlm346@gmail.com|tarikekincii@outlook.com|r.xxrisa1023@gmail.com|nielsrq@gmail.com|kt.lam@live.com|div2into@gmail.com|wendy890705@gmail.com|endopopirum@gmail.com|heeminmg@gmail.com|jay.vic.kr@gmail.com|aka81577@gmail.com|samerhalnajjar@gmail.com|nudaisy27@gmail.com|dogan_yuruk@icloud.com|cinarardasedat@gmail.com|sahinramazan211@gmail.com|1076513706@qq.com|max35370@gmail.com|belenplaza.v@gmail.com|hina0423nzlove@gmail.com|ansrud876@gmail.com|raihanrafi2801@gmail.com|sarbojitsarker@gmail.com|cenk.tasko.89@gmail.com|brianatanacio@gmail.com|riyal.maker@gmail.com|lau.amaya1210@gmail.com|senaakaradenizz@gmail.com|ramirezjubileen@gmail.com|fanzhongqianxun7@gmail.com|sirkang2012@gmail.com|ajrrakan@gmail.com|cesar.marin9707@gmail.com|michellebabu18@gmail.com|sangambasnet971@gmail.com|hazaldeniz1925@gmail.com|barryrayallen13@gmail.com|danilo1264.dc@gmail.com|stand.by.6256@gmail.com|haruka0925271211@icloud.com|muhammed201644@gmail.com|alshekhi.1995@gmail.com|abdulkadirturan@hotmail.com|erika.au.nz@gmail.com|g.ramirezqui@gmail.com|basilthomas225@gmail.com|zelmad.taik@gmail.com|enesaltikulac26@gmail.com|barbarosarslanerkal@gmail.com|sadikbostann@gmail.com|ryryk808@gmail.com|Andresmiranda664@gmail.com|jutian@student.unimelb.edu.au|michael_tkachuk@hotmail.com|trananna329@gmail.com|lola.chatainier@gmail.com|kimchhaykd@gmail.com|agl.vipul94@gmail.com|keviandrey@hotmail.com|sithum.sc@gmail.com|maxence.shan@gmail.com|warrickcastillo13@gmail.com|furkangenevlioglu@gmail.com|travishall2323@gmail.com|rickyhsu8668@gmail.com|samed.karapinar99@gmail.com|FAISAL2005.FR@GMAIL.COM|rebuyonlj@gmail.com|ceviksait5@gmail.com|huzaifafayyazg@gmail.com|laranya.oberoi@gamil.com|andres.pinzonardila@gmail.com|mahzabeen.alam.deh@ulab.edu.bd|mahzabeen.alam.deh@ulab.edu.bd|mateusmoresco14@hotmail.com|pedaysonam89@gmail.com|krishthikv@gmail.com|cacdacchristineg@gmail.com|elenarizo21@gmail.com|metinyermez@gmail.com|mustafaa.ozz01@gmail.com|melihbahadirhanbilgu@gmail.com|mohmadrah@yahoo.com|tareqkishawi@gmail.com|massimocarta511@gmail.com|belenplaza.v@gmail.com|ahmeetyuce.16@gmail.com|dogancan1n@gmail.com|nevastella@gmail.com|beausuthima@gmail.com|ellaoxford7@yahoo.co.uk|desmv@icloud.com|zbd543@gmail.com|hughesjiggs@gmail.com|sujansolta@gmail.com|matt50502@gmail.com|rewrih8685@gmail.com|ilkaycevizli@gmail.com|ngamze.uz@gmail.com|kbatuskilic@gmail.com|kimchhaykd@gmail.com|meteliciouss@gmail.com|brendaaparedes8@gmail.com|marcaz8367@gmail.com|gzllondey@gmail.com|joycecilagan@gmail.com|akifsharif303@gmail.com|atahancelebi98@gmail.com|s3622472@student.rmit.edu.au|diegoespinoza1993@gmail.com|sebastianrb1998@gmail.com|mariobatzesco@hotmail.com|shokocheer0809@icloud.com|omaralkayed16@gmail.com|nataliaoto@wp.pl|lorenzo.maniaci@me.com|steven.spignese@gmail.com|sadikkihicham03@gmail.com|lucac1162@gmail.com|dani.mihani@gmail.com|arq.camilobautista@gmail.com|joseandresestupinanr@gmail.com|maillard.jeanphilippe1@gmail.com|emreatuk.ea@gmail.com|fl.molina1993@gmail.com|harly822@gmail.com|damaris.palma25@gmail.com|basilsunnyxr@gmail.com|reehaasma29@gmail.com|ruben.embarek19@gmail.com|hannahterrill@outlook.com|hughesjiggs@gmail.com|diiaanaaph@gmail.com|adamhawkess2001@hotmail.com|lino.garret@gmail.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -320,
+        -440
+      ],
+      "id": "4746284b-6f1c-4908-a649-d486bf636aa3",
+      "name": "update_entry_email_autocom"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.jotform.com/form/243541205783051/question/9",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "apiKey",
+              "value": "115e27fb33dd2b810f8c546e87897875"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "question[items]",
+              "value": "nikhil.khanna9@gmail.com|0415262170@touchsms.email|ntienthanh999@gmail.com|featherjoe30727@yahoo.com.au|0431322513@touchsms.email|sart_za55@hotmail.com|rituraj.dutta00@gmail.com|aushak20@gmail.com|wnsgml6986@gmail.com|nn621220@gmail.com|hngc269@gmail.com|ehgml331@naver.com|s.balaggan8@gmail.com|niky.nikki@gmail.com|awasthynishtha99@gmail.com|janhvirajsingh@gmail.com|m999.akn11@gmail.com|pfirsich.parfum@gmail.com|rudtls357@gmail.com|y3737ytt@naver.com|wjdwlsdn8520@gmail.com|ghkdwlals5729@gmail.com|da9820@naver.com|alimusawi90@gmail.com|rosyidah1977@gmail.com|tlatjdgh923@gmail.com|qkrrhkdgml200@gmail.com|marcocantarero1999@gmail.com|tanjukocamaz@gmail.com|takahasiryohei@icloud.com|cindystepord.cs@gmail.com|javier.monsalve.77@outlook.com|caballerorichard047@gmail.com|estefania.bernabeu30@gmail.com|siddhartha_varshney@yahoo.com|yasmeenwalia31081998@gmail.com|ritambhowmik.19@gmail.com|uran1998.9.21@icloud.com|ghaisonia7@gmail.com|kaurdeep00017@gmail.com|rituraj.dutta00@gmail.com|sart_za55@hotmail.com|ebubekirsever1625@gmail.com|hakanzun@gmail.com|batuhankundak1996125@gmail.com|inderiaarmbrister2707@gmail.com|abenyann@gmail.com|lucklouise4@gmail.com|kje405@naver.com|flionnwalshleone@gmail.com|kenza.hileret@gmail.com|john.l.fly.kr@gmail.com|yukinoel54321@gmail.com|yerin9088@gmail.com|s9540221@gmail.com|ok2ykr@gmail.com|weiyiwu198906@gmail.com|tosssks@gmail.com|pfirsich.parfum@gmail.com|syoon9502@gmail.com|hongseung0317@gmail.com|yigitomar@icloud.com|ogncimen@gmail.com|m999.akn11@gmail.com|mmsloth1997@gmail.com|rudtls357@gmail.com|clzls623@gmail.com|srr200026@gmail.com|netty.prvt@gmail.com|jinsolpia@naver.com|laismelofranca@hotmail.com|sott57@gmx.de|onurcanzengin@hotmail.com|seagull826@gmail.com|dnztncr10@gmail.com|azizokansari@gmail.com|wilawan2595@gmail.com|abdulmyakub@gmail.com|gunerfirat@outlook.com.tr|turkmen1881@outlook.com|tnqlssom407@gmail.com|fantasista1005@gmail.com|shunshun.43@gmail.com|yuna3104love@gmail.com|ij84k7ynd2@gmail.com|karasu.kanasubi@gmail.com|nanisru7@hotmail.com|nataliavasv9@gmail.com|sehmuscicek33@gmail.com|sametcikikci@hotmail.com|lopesdani4@gmail.com|ao.970203@gmail.com|a.miiinko3@gmail.com|ozdemiirhazal@gmail.com|maruno130@gmail.com|psy21235@naver.com|anthony-blondet@hotmail.fr|sarah.stierle@t-online.de|gomezcjoseluis@gmail.com|alperentopaloglu0022@gmail.com|sierrita2013@hotmail.com|tomtam_jok@hotmail.com|erensolakk@icloud.com|anna.hapczynski@yahoo.de|jasinski.szymon@yahoo.com|lxllxo@naver.com|sezenbaser@gmail.com|luisa.moreno002@gmail.com|Perolotud1155@gmail.com|ahnick873@gmail.com|neojapanese88@gmail.com|tam.teamh@gmail.com|seonhwa1110@gmail.com|lynnwaran@gmail.com|pia.nmnl.ryu27@gmail.com|bvatandaslar@hotmail.com|arciosakae@gmail.com|ninanurhass@gmail.com|pritysoon@gmail.com|djvnfjf1@gmail.com|coskunesmahan@gmail.com|bahadiradatepe@hotmail.com|sammclean277@gmail.com|pinst91@gmail.com|glennmontoyav@gmail.com|mrymaydemir41@gmail.com|kubracelik.au@gmail.com|luccianoagostini@gmail.com|omercannozgul@gmail.com|hocaogluumetehan@gmail.com|derl7611@gmail.com|aaanba004@gmail.com|sujilee0326@gmail.com|rdr.vasquez@gmail.com|naoki.koyama.1120@gmail.com|petiauxanatole04@gmail.com|oswaldoesquivia23@gmail.com|lennypool@hotmail.com|kevin.tran@estaca.eu|yagmur.yuksel4@hotmail.com|avbahargungor@gmail.com|zeeaugustaa@gmail.com|ohjujanni@gmail.com|lopesdani4@gmail.com|rosyidah1977@gmail.com|orkungzn@gmail.com|fabiangalvisc@gmail.com|mertcanngurgull@gmail.com|zinc.chang8259@gmail.com|carl.froblom@hotmail.com|joshua.onyango13@yahoo.de|ij84k7ynd2@gmail.com|s.mikiko.0530@gmail.com|xpelcy91@gmail.com|raniellyscheffer@gmail.com|arq.leonardorivera@gmail.com|gy9826@naver.com|chwh3720@gmail.com|mateo.carim13@gmail.com|baraniscani@gmail.com|krlosgarciar@gmail.com|marlygallardor@gmail.com|apple5boxes0@gmail.com|7mood3879@gmail.com|csanchezmerino99@gmail.com|lopesdani4@gmail.com|kkeita000921@icloud.com|yuhiijima@gmail.com|vunhatlong02@gmail.com|370996415@qq.com|dshangyuan72@gmail.com|alexande26792@gmail.com|feraysrt@gmail.com|brayanlarios55@gmail.com|asai.naitei@gmail.com|dsuadiye@gmail.com|arq.leonardorivera@gmail.com|yone0121@keio.jp|kevin.tran@estaca.eu|giriate_madam@yahoo.co.jp|joshuaasri@gmail.com|erensolakk@icloud.com|g.eren39@icloud.com|mujge.ozturk@outlook.com|lisa.t0032@gmail.com|pringleinau@gmail.com|yuuri02180213@gmail.com|rivisatr@gmail.com|mete686888@icloud.com|carlos.281298@outlook.com|gmshark99999@gmail.com|kayrakiran98@gmail.com|andac.arslan81@gmail.com|juan.andres-@hotmail.com|matt.park71771@gmail.com|shi.rx62@gmail.com|ardaural26@gmail.com|jsaavedra.bp@gmail.com|boubnane.1120@gmail.com|melst02anna@gmail.com|lxllxo@naver.com|sumina0830@yahoo.co.jp|mardinlibariscan@gmail.com|hirakawamei@gmail.com|cnmnwt@gmail.com|stevencamelogomez@gmail.com|samerhalnajjar@gmail.com|ysfymn1994@gmail.com|sahill.paul@gmail.com|enesaltikulac26@gmail.com|melissa.rouabah@hotmail.com|tlagusals@gmail.com|fournierflorian11@gmail.com|ikuma370465@gmail.com|bernarinc@gmail.com|staargazzing@gmail.com|tommy.argibay06@gmail.com|iwillbehappy7@gmail.com|sbeie027@gmail.com|ovuncakin@gmail.com|melik9493@hotmail.com|cgent20@gmail.com|minutolaadriano6@gmail.com|mitchelcameronunai@gmail.com|hs08_run@yahoo.co.jp|shene_ash@yahoo.com|aishenans_11@yahoo.com|tgj0729@gmail.com|eda.kus@hotmail.com|omfaoz@icloud.com|berk.akoglu@gmail.com|bernardes.nicolas1@gmail.com|aya.ca.619@gmail.com|halit.balkan@icloud.com|tathetata@gmail.com|fudgml9026@gmail.com|okawariho00@gmail.com|mtsabimayu@gmail.com|rosiesired@outlook.com|emilycryans@gmail.com|rogerparis2001@gmail.com|thomaspaquet63430@gmail.com|noa.ambrosse16@gmail.com|dogancan1n@gmail.com|rojassaezdiego@gmail.com|gingirarko619@gmail.com|zavattarogiulio@gmail.com|javier.lt.1999@gmail.com|i2345gcmo@gmail.com|raihanrafi2801@gmail.com|frhtatn1903@gmail.com|bobbie841728901@gmail.com|bernarinc@gmail.com|nudaisy27@gmail.com|cocomiltirofi2525@gmail.com|jesse@codde.dev|lucia.f.anastasio@gmail.com|victor.hrreis92@gmail.com|marineharvier@gmail.com|andreaortegaorduz05@gmail.com|rioredsox@icloud.com|mehmetgoren1905@gmail.com|aysegulturanalp1@gmail.com|quentin.gsf@gmail.com|quentin-teixeira@live.fr|arq.leonardorivera@gmail.com|hsynalmhry4@gmail.com|rosealima.wade@gmail.com|alvaroduraan@gmail.com|Perolotud1155@gmail.com|ilias.oumami@gmail.com|fahadaljbar262@gmail.com|muhammed201644@gmail.com|idrisy.1993@hotmail.com|ibrahimekinci36@gmail.com|saud.9741@hotmail.com|brrivas.tiznado@gmail.com|agodoyferia@gmail.com|ana-xio@hotmail.com|ufukozzbek@gmail.com|dytoguzhanguray@gmail.com|bernardes.nicolas1@gmail.com|duniagarcia90@gmail.com|gocmenoguzhan07@gmail.com|be.burakerdogan@gmail.com|ivanpernas98@gnail.com|burcin_gultekin@hotmail.com|ayano.styles.e@gmail.com|hugo-chapeau@hotmail.fr|azelmeunier@gmail.com|otsurika2@gmail.com|mehmetfurkansorkun@gmail.com|russo.alessandro98@gmail.com|barismete1@gmail.com|lucaschimenti@hotmail.com|sdy3432@outlook.com|tncshii926@gmail.com|singhjoydeep03@gmail.com|karanjotsingh2121@gmail.com|oasr9503@gmail.com|markpedroso@gmail.com|cinarardasedat@gmail.com|c.demirbaglar@hotmail.com|mael.michel92@gmail.com|mertalilli3@gmail.com|habusaq27@gmail.com|callumwilliams2001@gmail.com|azelmeunier@gmail.com|dkfltn1998@gmail.com|mustafaa.ozz01@gmail.com|eneszerin@icloud.com|eduardo.navarroa95@gmail.com|longechamp.damien@gmail.com|sarbojitsarker@gmail.com|albalawii914@gmail.com|mandy.thombre@gmail.com|jsaavedra.bp@gmail.com|take8571@icloud.com|alshekhi.1995@gmail.com|cevikugursefa@gmail.com|cgent20@gmail.com|codud5823@gmail.com|sylvain-reynaud@hotmail.com|cansgl.3531@icloud.com|ugurannac@gmail.com|aysegulturanalp1@gmail.com|dewanaditya76@gmail.com|sei.syoguo@gmail.com|melihbahadirhanbilgu@gmail.com|lubowen4765@gmail.com|gianluca.sbrolli@icloud.com|andrescdlm346@gmail.com|tarikekincii@outlook.com|r.xxrisa1023@gmail.com|nielsrq@gmail.com|kt.lam@live.com|div2into@gmail.com|wendy890705@gmail.com|endopopirum@gmail.com|heeminmg@gmail.com|jay.vic.kr@gmail.com|aka81577@gmail.com|samerhalnajjar@gmail.com|nudaisy27@gmail.com|dogan_yuruk@icloud.com|cinarardasedat@gmail.com|sahinramazan211@gmail.com|1076513706@qq.com|max35370@gmail.com|belenplaza.v@gmail.com|hina0423nzlove@gmail.com|ansrud876@gmail.com|raihanrafi2801@gmail.com|sarbojitsarker@gmail.com|cenk.tasko.89@gmail.com|brianatanacio@gmail.com|riyal.maker@gmail.com|lau.amaya1210@gmail.com|senaakaradenizz@gmail.com|ramirezjubileen@gmail.com|fanzhongqianxun7@gmail.com|sirkang2012@gmail.com|ajrrakan@gmail.com|cesar.marin9707@gmail.com|michellebabu18@gmail.com|sangambasnet971@gmail.com|hazaldeniz1925@gmail.com|barryrayallen13@gmail.com|danilo1264.dc@gmail.com|stand.by.6256@gmail.com|haruka0925271211@icloud.com|muhammed201644@gmail.com|alshekhi.1995@gmail.com|abdulkadirturan@hotmail.com|erika.au.nz@gmail.com|g.ramirezqui@gmail.com|basilthomas225@gmail.com|zelmad.taik@gmail.com|enesaltikulac26@gmail.com|barbarosarslanerkal@gmail.com|sadikbostann@gmail.com|ryryk808@gmail.com|Andresmiranda664@gmail.com|jutian@student.unimelb.edu.au|michael_tkachuk@hotmail.com|trananna329@gmail.com|lola.chatainier@gmail.com|kimchhaykd@gmail.com|agl.vipul94@gmail.com|keviandrey@hotmail.com|sithum.sc@gmail.com|maxence.shan@gmail.com|warrickcastillo13@gmail.com|furkangenevlioglu@gmail.com|travishall2323@gmail.com|rickyhsu8668@gmail.com|samed.karapinar99@gmail.com|FAISAL2005.FR@GMAIL.COM|rebuyonlj@gmail.com|ceviksait5@gmail.com|huzaifafayyazg@gmail.com|laranya.oberoi@gamil.com|andres.pinzonardila@gmail.com|mahzabeen.alam.deh@ulab.edu.bd|mahzabeen.alam.deh@ulab.edu.bd|mateusmoresco14@hotmail.com|pedaysonam89@gmail.com|krishthikv@gmail.com|cacdacchristineg@gmail.com|elenarizo21@gmail.com|metinyermez@gmail.com|mustafaa.ozz01@gmail.com|melihbahadirhanbilgu@gmail.com|mohmadrah@yahoo.com|tareqkishawi@gmail.com|massimocarta511@gmail.com|belenplaza.v@gmail.com|ahmeetyuce.16@gmail.com|dogancan1n@gmail.com|nevastella@gmail.com|beausuthima@gmail.com|ellaoxford7@yahoo.co.uk|desmv@icloud.com|zbd543@gmail.com|hughesjiggs@gmail.com|sujansolta@gmail.com|matt50502@gmail.com|rewrih8685@gmail.com|ilkaycevizli@gmail.com|ngamze.uz@gmail.com|kbatuskilic@gmail.com|kimchhaykd@gmail.com|meteliciouss@gmail.com|brendaaparedes8@gmail.com|marcaz8367@gmail.com|gzllondey@gmail.com|joycecilagan@gmail.com|akifsharif303@gmail.com|atahancelebi98@gmail.com|s3622472@student.rmit.edu.au|diegoespinoza1993@gmail.com|sebastianrb1998@gmail.com|mariobatzesco@hotmail.com|shokocheer0809@icloud.com|omaralkayed16@gmail.com|nataliaoto@wp.pl|lorenzo.maniaci@me.com|steven.spignese@gmail.com|sadikkihicham03@gmail.com|lucac1162@gmail.com|dani.mihani@gmail.com|arq.camilobautista@gmail.com|joseandresestupinanr@gmail.com|maillard.jeanphilippe1@gmail.com|emreatuk.ea@gmail.com|fl.molina1993@gmail.com|harly822@gmail.com|damaris.palma25@gmail.com|basilsunnyxr@gmail.com|reehaasma29@gmail.com|ruben.embarek19@gmail.com|hannahterrill@outlook.com|hughesjiggs@gmail.com|diiaanaaph@gmail.com|adamhawkess2001@hotmail.com|lino.garret@gmail.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        120,
+        -440
+      ],
+      "id": "26fd8c6f-cbc1-4146-8106-cef989cb99e1",
+      "name": "update_exit_email_autocom"
+    },
+    {
+      "parameters": {
+        "operation": "query",
+        "projectId": "roomlyai",
+        "query": "{\n    \"structuredQuery\":{\n        \"where\":{\n            \"fieldFilter\":{\n                \"field\":{\n                    \"fieldPath\":\"status\"\n                },\n                \"op\":\"EQUAL\",\n                \"value\":{\n                    \"stringValue\":\"For Rent\"\n                }\n            }\n        },\n        \"from\":[{\"collectionId\":\"listings\"}]\n    }\n}"
+      },
+      "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
+      "typeVersion": 1.1,
+      "position": [
+        -500,
+        -40
+      ],
+      "id": "511f4dbd-8559-4c82-9f1f-c197618d536b",
+      "name": "find_for_rent_rooms",
+      "credentials": {
+        "googleFirebaseCloudFirestoreOAuth2Api": {
+          "id": "LUkJxOPCfd9u3sfm",
+          "name": "Google Firebase Cloud Firestore account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        20,
+        320
+      ],
+      "id": "31efc16e-e9e1-41e4-8273-3171f10d125d",
+      "name": "loop_over_each_listings"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "list",
+          "cachedResultName": "roomly_dev",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblwRQEZWQVUSUlGt",
+          "mode": "list",
+          "cachedResultName": "lease_bond_legal",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG/tblwRQEZWQVUSUlGt"
+        },
+        "filterByFormula": "={room_id} =  '{{ $json.room_id }}'",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        220,
+        440
+      ],
+      "id": "2404a110-bfe8-4672-a54c-6f18d2b3cf59",
+      "name": "Airtable",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const airtableData = $input.all();\n\nlet add_together = [];\n\nairtableData.forEach((item) => {\n  add_together.push(item.json.bond_address);\n});\n\n// Access the static data\nconst workflowStaticData = $getWorkflowStaticData('global');\nconst lastExecution = workflowStaticData.listingsForRent || [];\n\nadd_together = add_together.concat(lastExecution);\n\n// Update the static data\nworkflowStaticData.listingsForRent = add_together;\n\nreturn { listingsForRent: add_together };"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        400,
+        440
+      ],
+      "id": "8a7ffb9d-228c-484a-8dc8-d811b7aba952",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// initialize staticData object\nconst workflowStaticData = $getWorkflowStaticData('global');\n\n// Example data\n// const workflowStaticData = {\n//   listingsForRent: [\n//     \"ROOM 3, 814 Level 8/238 Flinders Street,MELBOURNE VIC 3000\",\n//     \"ROOM 2, 814 Level 8/238 Flinders Street,MELBOURNE VIC 3000\"\n//   ]\n// };\n\n// Step 1: Split strings and structure them\nfunction processListings(listings) {\n  return listings.map(listing => {\n    // Replace \"/\" with \",\" for uniform splitting, then trim results\n    return listing.replace(/\\//g, \",\").split(\",\").map(part => part.trim());\n  });\n}\n\n// Step 2: Group listings by address\nfunction groupByAddress(splitListings) {\n  return splitListings.reduce((result, [room, level, address]) => {\n    if (!result[address]) {\n      result[address] = {};\n    }\n    if (!result[address][level]) {\n      result[address][level] = [];\n    }\n    result[address][level].push(room);\n    return result;\n  }, {});\n}\n\n// Step 3: Format grouped data into output string\nfunction formatOutput(groupedListings) {\n  return Object.entries(groupedListings).map(([address, levels]) => {\n    const levelDetails = Object.entries(levels)\n      .map(([level, rooms]) => ` *${level}\\n  ${rooms.sort().join(\"\\n  \")}`)\n      .join(\"\\n\");\n    return `*${address}\\n${levelDetails}`;\n  }).join(\"\\n\\n\");\n}\n\n// Main execution\nconst splitListings = processListings(workflowStaticData.listingsForRent);\nconst groupedListings = groupByAddress(splitListings);\nconst formattedOutput = formatOutput(groupedListings);\n\nreturn { formattedOutput }"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        260
+      ],
+      "id": "f1a00ff8-1084-4a22-9f53-4673e48b7cec",
+      "name": "Code2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.jotform.com/form/250088412158051/question/62",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "apiKey",
+              "value": "115e27fb33dd2b810f8c546e87897875"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "question[list]",
+              "value": "={{ $json.formattedOutput }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        380,
+        260
+      ],
+      "id": "173a8b9e-1347-44b2-a3f2-b1434b641b51",
+      "name": "update_application_form_option"
+    },
+    {
+      "parameters": {
+        "content": "## Update 4 tenant forms' email autocompletion text box parameter\n** 4 forms including: notice to vacate, maintenance, entry condition report, exit condition report",
+        "height": 300,
+        "width": 1220,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -600,
+        -560
+      ],
+      "typeVersion": 1,
+      "id": "4df24845-753f-4e1e-aafe-7086b60bad20",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Update application form's \"which room you are applying for\" options parameter",
+        "height": 480,
+        "width": 980,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -600,
+        -180
+      ],
+      "typeVersion": 1,
+      "id": "3072dc82-efe4-47c4-a4c3-bc4d229aef92",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Trigger Events For updating Jotform parameters\n** new renter move in (new lease created) - update both current_renter_emails and for_rent_listings\n** renter intend to move out (new notice to vacate received) - update for_rent_listings\n** renter moved out (user type changed from tenant to past tenant ) - update current_renter_emails\n** renter email updated (user table's email column is updated) - update current_renter_emails",
+        "height": 860,
+        "width": 640
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1380,
+        -560
+      ],
+      "typeVersion": 1,
+      "id": "c923dbcf-923f-4e12-ba5c-3025f74e33e8",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "email",
+              "renameField": true,
+              "outputFieldName": "all_renter_emails"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -520,
+        -440
+      ],
+      "id": "80fcc36f-a912-40f9-9aab-c67deca75d2c",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "users",
+          "mode": "list",
+          "cachedResultName": "users"
+        },
+        "returnAll": true,
+        "where": {
+          "values": [
+            {
+              "column": "user_type",
+              "value": "Tenant"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        -720,
+        -440
+      ],
+      "id": "3da71919-5243-44ef-a1dc-51c2bce26fd5",
+      "name": "Postgres",
+      "credentials": {
+        "postgres": {
+          "id": "H2HiZjpsabeXLbQ4",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4eee3632-389a-4ea0-a348-186e952464aa",
+              "leftValue": "={{ $json.fields.move_type }}",
+              "rightValue": "OUT_NOT_RENTED || OUT_RENTED",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            },
+            {
+              "id": "a942c67f-09e4-4b07-9a35-0dc828ddf2f3",
+              "leftValue": "={{ $json.fields.move_date }}",
+              "rightValue": "={{ $today }}",
+              "operator": {
+                "type": "dateTime",
+                "operation": "beforeOrEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1040,
+        -80
+      ],
+      "id": "fef84c91-7263-44c1-a6fa-6b0f5c3e7fb9",
+      "name": "renter_moved_out"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "6d60505c-f293-4c37-8da1-d96a6491e25c",
+              "leftValue": "={{ $json.fields.move_type }}",
+              "rightValue": "IN",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1200,
+        -140
+      ],
+      "id": "0f0c955c-b541-4a1d-9222-e0d24e1a419f",
+      "name": "renter_move_in"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "authentication": "airtableTokenApi",
+        "baseId": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "id"
+        },
+        "tableId": {
+          "__rl": true,
+          "value": "tbl6j6bOat2xbAxyw",
+          "mode": "id"
+        },
+        "triggerField": "move_type",
+        "additionalFields": {
+          "fields": ""
+        }
+      },
+      "type": "n8n-nodes-base.airtableTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1340,
+        -140
+      ],
+      "id": "b3b4c975-d8e6-4573-8a28-54ce1e0db100",
+      "name": "move_type updated",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "authentication": "airtableTokenApi",
+        "baseId": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "id"
+        },
+        "tableId": {
+          "__rl": true,
+          "value": "tbl7Szz7Es7xAss6L",
+          "mode": "id"
+        },
+        "triggerField": "Email",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtableTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1340,
+        -300
+      ],
+      "id": "8b5d6fdb-fec8-428c-8a08-588d8d72ab20",
+      "name": "email_updated",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "find_for_rent_rooms": [
+      {
+        "json": {
+          "_name": "projects/roomlyai/databases/(default)/documents/listings/20_63",
+          "_id": "20_63",
+          "_createTime": "2025-01-12T11:51:25.974847Z",
+          "_updateTime": "2025-01-13T06:33:36.967503Z",
+          "available_from": "",
+          "updated_at": "2025-01-12T19:51:25.869286",
+          "room_id": "63",
+          "clicks": "0",
+          "listing_title": "Private 🧱LEGO🧱 room,CBD,free tram zone",
+          "views": "0",
+          "photos": [
+            "https://drive.usercontent.google.com/download?id=1KpYb1GM7iayUoRuIlvaF7Xpcw1XOEsdd&export=view&authuser=0",
+            "https://drive.usercontent.google.com/download?id=1Kts4u_JwnMs9Gmm89Uh2VJBW0yE3E44-&export=view&authuser=0",
+            "https://drive.usercontent.google.com/download?id=1Ku1TmeQCwhyvrr12w-mHz4Wrxrw0JlPV&export=view&authuser=0",
+            "https://drive.usercontent.google.com/download?id=1KuZCShk5Y-gDZifq1S7hzCW1DGVOLnUX&export=view&authuser=0",
+            "https://drive.usercontent.google.com/download?id=1L-p0G4Yaf_KTeDsVVyfd7iMpd049dRLm&export=view&authuser=0",
+            "https://drive.usercontent.google.com/download?id=1L6PUYKGs-38Stn7nIm4_3VsiHeN65n9i&export=view&authuser=0",
+            "https://drive.usercontent.google.com/download?id=1LAFTJYr9cYzn6RJkizsX2XaE96CuGRxl&export=view&authuser=0",
+            "https://drive.usercontent.google.com/download?id=1L8GTI4aoH2CPndg7FUGUMic8WhNmPspJ&export=view&authuser=0",
+            "https://drive.usercontent.google.com/download?id=1L6i3ruEdg3bqHRaAqgX7fErZguAZNZiy&export=view&authuser=0",
+            "https://drive.usercontent.google.com/download?id=1LXQTbvx05P9AHb7izPy41FdotJws0hGM&export=view&authuser=0",
+            "https://drive.usercontent.google.com/download?id=1LT9B9GdPF71cmwgl_8hL2NhJgg5HNl_0&export=view&authuser=0",
+            "https://drive.usercontent.google.com/download?id=1LSgdhg1DrtLCcNHuIhjp7vs8890VUNe3&export=view&authuser=0",
+            "https://drive.usercontent.google.com/download?id=1LRuSU8yKGuHZVaqJnE1C3squrjG3n0ia&export=view&authuser=0"
+          ],
+          "unit_id": "20",
+          "description": "🌟 Available  🌟\n🧹 Cleaning of Common Area Every 4 - 6 weeks! 🧹\n📜 Follows Legal Procedures! 📜\n\n🏠 Flat Details:\n3-bedroom, 1-bathroom flat in Melbourne CBD\nRight across from Flinders Street Station & Federation Square. It's within the Free Tram Zone 🚶‍♂️\nYour own private room with basic furniture 🛏️\nShare the common area with 2 other awesome flatmates from around the world 🌏 (max 3 people)\n\n📜 Rental Process:\n◾ Bond deposit handled with RTBA\n◾ Residential Tenancy Agreement signing\n◾ Video condition reports before move-in and upon move-out for smooth tenancy\n\n🤝 Friendly Environment: \n 🔺 Landlord does not live in the flat \n 🔺 Current tenants are super nice and get along well 😊\n\n🛏️ Note:\nQuilts and covers in pictures are for demo purposes; bring your own if you prefer, but we can provide them if needed\n\n🛋️ Included:\n🔶 FREE WiFi 🌐\n🔶 Common area appliances, cookware, etc. 🍳\n🔶 Bills (electricity, water, gas) split evenly among tenants (approx. AUD 5 - 10 per week per pax)\n\n🔑 Room AUMF08-2:\n🔹 Weekly Rent: A$225 (14-weeks minimum)\n🔹 Unique room made from large Lego blocks 🧩 (not fully soundproof but offers privacy)\n🔹 Furnished with Single Bedframe, Single Mattress, Lock on bedroom door, Desk, Chair, Desk Lamp, Bedside Lamp, Socket * 2, Quilt, Pillows * 2, Bedsheet + Duvet Cover Set, Bedspread, Cushion * 1, Keys&Cards: 1 CardUnique room made from large Lego blocks 🧩 (not fully soundproof but offers privacy)\n\n🌐 For More Info:\nCheck out details about the neighborhood, amenities, and flatmates on our website:https://roomly.com.au/products/aumf08-2\n📞 Contact Us:\nInterested? SMS or whatsapp Message us at 0428083889 to grab your spot in this awesome flat (calls are not available)!",
+          "created_at": "2025-01-12T19:51:25.869280",
+          "status": "For Rent"
+        }
+      },
+      {
+        "json": {
+          "_name": "projects/roomlyai/databases/(default)/documents/listings/20_64",
+          "_id": "20_64",
+          "_createTime": "2025-01-12T11:51:26.020031Z",
+          "_updateTime": "2025-01-13T06:34:54.307023Z",
+          "available_from": "",
+          "updated_at": "2025-01-12T19:51:25.919311",
+          "room_id": "64",
+          "clicks": "0",
+          "listing_title": "Private 🧱LEGO🧱 room,CBD,free tram zone",
+          "views": "0",
+          "photos": [
+            "https://drive.usercontent.google.com/download?id=1KnUZDdXJLFqDRLXa9zJNH4YXhU1Z_Bmk&export=view&authuser=0",
+            "https://drive.usercontent.google.com/download?id=1KlZ3hhEqdsPnVMf9brGrhv2xv-c19x-1&export=view&authuser=0",
+            "https://drive.usercontent.google.com/download?id=1KkMa8iBawPkmo6SK3zVqoZlEvBhg8yfw&export=view&authuser=0",
+            "https://drive.usercontent.google.com/download?id=1KsTnL8pWnvk1nqSYQ7C8WVrJJpCQYlFi&export=view&authuser=0",
+            "https://drive.usercontent.google.com/download?id=1L-p0G4Yaf_KTeDsVVyfd7iMpd049dRLm&export=view&authuser=0",
+            "https://drive.usercontent.google.com/download?id=1L6PUYKGs-38Stn7nIm4_3VsiHeN65n9i&export=view&authuser=0",
+            "https://drive.usercontent.google.com/download?id=1LAFTJYr9cYzn6RJkizsX2XaE96CuGRxl&export=view&authuser=0",
+            "https://drive.usercontent.google.com/download?id=1L8GTI4aoH2CPndg7FUGUMic8WhNmPspJ&export=view&authuser=0",
+            "https://drive.usercontent.google.com/download?id=1L6i3ruEdg3bqHRaAqgX7fErZguAZNZiy&export=view&authuser=0",
+            "https://drive.usercontent.google.com/download?id=1LXQTbvx05P9AHb7izPy41FdotJws0hGM&export=view&authuser=0",
+            "https://drive.usercontent.google.com/download?id=1LT9B9GdPF71cmwgl_8hL2NhJgg5HNl_0&export=view&authuser=0",
+            "https://drive.usercontent.google.com/download?id=1LSgdhg1DrtLCcNHuIhjp7vs8890VUNe3&export=view&authuser=0",
+            "https://drive.usercontent.google.com/download?id=1LRuSU8yKGuHZVaqJnE1C3squrjG3n0ia&export=view&authuser=0"
+          ],
+          "unit_id": "20",
+          "description": "🌟 Available  🌟\n🧹 Cleaning of Common Area Every 4 - 6 weeks! 🧹\n📜 Follows Legal Procedures! 📜\n\n🏠 Flat Details:\n3-bedroom, 1-bathroom flat in Melbourne CBD\nRight across from Flinders Street Station & Federation Square. It's within the Free Tram Zone 🚶‍♂️\nYour own private room with basic furniture 🛏️\nShare the common area with 2 other awesome flatmates from around the world 🌏 (max 3 people)\n\n📜 Rental Process:\n◾ Bond deposit handled with RTBA\n◾ Residential Tenancy Agreement signing\n◾ Video condition reports before move-in and upon move-out for smooth tenancy\n\n🤝 Friendly Environment: \n 🔺 Landlord does not live in the flat \n 🔺 Current tenants are super nice and get along well 😊\n\n🛏️ Note:\nQuilts and covers in pictures are for demo purposes; bring your own if you prefer, but we can provide them if needed\n\n🛋️ Included:\n🔶 FREE WiFi 🌐\n🔶 Common area appliances, cookware, etc. 🍳\n🔶 Bills (electricity, water, gas) split evenly among tenants (approx. AUD 5 - 10 per week per pax)\n\n🔑 Room AUMF08-3:\n🔹 Weekly Rent: A$225 (14-weeks minimum)\n🔹 Unique room made from large Lego blocks 🧩 (not fully soundproof but offers privacy)\n🔹 Furnished with Single Bedframe, Single Mattress, Lock on bedroom door, Desk, Chair, Desk Lamp, Bedside Lamp, Socket * 2, Quilt, Pillows * 2, Bedsheet + Duvet Cover Set, Bedspread, Cushion * 1, Keys&Cards: 1 CardUnique room made from large Lego blocks 🧩 (not fully soundproof but offers privacy)\n\n🌐 For More Info:\nCheck out details about the neighborhood, amenities, and flatmates on our website:https://roomly.com.au/products/aumf08-3\n📞 Contact Us:\nInterested? SMS or whatsapp Message us at 0428083889 to grab your spot in this awesome flat (calls are not available)!",
+          "created_at": "2025-01-12T19:51:25.919308",
+          "status": "For Rent"
+        }
+      }
+    ],
+    "Code2": [
+      {
+        "json": {
+          "formattedOutput": "*238 Flinders Street\n *814 Level 8\n  ROOM 2\n  ROOM 3"
+        }
+      }
+    ],
+    "move_type updated": [
+      {
+        "json": {
+          "id": "rec0mIgdZcuTd49Hl",
+          "createdTime": "2025-01-14T05:47:18.000Z",
+          "fields": {
+            "move_date": "2025-01-21",
+            "renter_internal_code": "E_R_AUMEL-LAT36-1003-2_20240724",
+            "move_type": "OUT_NOT_RENTED",
+            "room_id": "75",
+            "tenant_id": "264"
+          }
+        }
+      }
+    ],
+    "email_updated": [
+      {
+        "json": {
+          "id": "rec00MnEUDO3uHwPz",
+          "createdTime": "2025-01-12T12:07:21.000Z",
+          "fields": {
+            "Email": "petiauxanatole04@gmail.com",
+            "Last name": "PETIAUX",
+            "Display name": "P_R_AUMEL-FLI238-414-2_20230104",
+            "Phone": "+61458735316",
+            "First name": "ANATOLE QUENTIN M",
+            "user_id": "443"
+          }
+        }
+      }
+    ]
+  },
+  "repo_name": "roomly-n8n",
+  "repo_owner": "roomly-ai",
+  "repo_path": "https://github.com/roomly-ai/roomly-n8n",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-01-22T14:19:29.000Z",
+  "versionId": "1552f61e-2dc7-4485-a68e-6f67797550c3"
+}
