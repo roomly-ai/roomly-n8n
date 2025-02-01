@@ -1,0 +1,268 @@
+{
+  "active": true,
+  "connections": {
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Prep_Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prep_Fields": {
+      "main": [
+        [
+          {
+            "node": "find room code and avaialble date",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "new application submitted": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "find room code and avaialble date": {
+      "main": [
+        [
+          {
+            "node": "Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-01-08T01:36:11.033Z",
+  "id": "cwHiOb2ujSfqDdho",
+  "meta": null,
+  "name": "update_room_application_to_slack",
+  "nodes": [
+    {
+      "parameters": {
+        "keep": "lastItems"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        -140,
+        -60
+      ],
+      "id": "f7c6e12a-8350-453d-95da-afdb962edbe3",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C06914HQMPU",
+          "mode": "list",
+          "cachedResultName": "room-applications"
+        },
+        "text": "=NEW APPLICATION RECEIVED\n<@U069X5AA5FA><@U06197A55H8><@U07KA2L0F0D><@U06197AJUJE>\nROOM: {{ $json.room_code.toUpperCase() }}\nEMPTY FROM: {{ $json.move_in_out_date }}\nMOVE-IN: {{ $('Prep_Fields').item.json[\"Move-in Date\"] }}\nNAME: {{ $('Prep_Fields').item.json.Name }}\nFROM: {{ $('Prep_Fields').item.json[\"Country of Origin\"] }}\nREFERRAL: {{ $('Prep_Fields').item.json.Referral }}\nDEGREE: {{ $('Prep_Fields').item.json.Degree }}\nWORK BEFORE: {{ $('Prep_Fields').item.json[\"Occupation Before \"] }}\nWORK AU: {{ $('Prep_Fields').item.json[\"Occupation in AU\"] }}",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        360,
+        -60
+      ],
+      "id": "462bb670-5c50-4826-81af-2d942cf20867",
+      "name": "Slack",
+      "webhookId": "c1b79d7a-1bb1-4b3e-9274-1c8f3f08ac32",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "vQp7BR45bihPVTtF",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "848affa6-0856-4821-be93-9f795f5ec111",
+              "name": "Address of property you are applying for? ",
+              "value": "={{ $json[\"Address of property you are applying for? \"] }}",
+              "type": "string"
+            },
+            {
+              "id": "5009e106-ea38-4d11-ae5c-f5a404bf1ced",
+              "name": "Name",
+              "value": "={{ $json.Name }}",
+              "type": "string"
+            },
+            {
+              "id": "6ce9ef6e-de54-464a-bd9e-deba88b5f63a",
+              "name": "Referral",
+              "value": "={{ $json[\"If so, by whom?\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "71106792-6f70-416b-add7-e74a4ef4eef3",
+              "name": "Degree",
+              "value": "={{ $json[\"Please tell us about your highest education level and qualifications.\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "7ca76642-90da-4668-9380-1452b5f3afc2",
+              "name": "Occupation Before ",
+              "value": "={{ $json[\"What did you do for work before moving to Australia?\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "efd5573f-39d4-4d0d-aff6-b9c7c2ab7429",
+              "name": "Occupation in AU",
+              "value": "={{ $json[\"What do you do for work in Australia?\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "2b4fd12b-6f7a-4930-b0c7-3c5335a741e9",
+              "name": "Move-in Date",
+              "value": "={{ $json[\"What is your commence date? ( we approve application based on the commence date, no change of date once your application is approved )\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "c108e8b3-be3d-4ee5-9599-5727c9f5352a",
+              "name": "Country of Origin",
+              "value": "={{ $json[\"Country of issue\"] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        20,
+        -60
+      ],
+      "id": "6255fc8b-74f8-4145-b8bd-575640a73b83",
+      "name": "Prep_Fields"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1DUPS2CFrRNUaQGdpwEVZ84qAQ4uWGry4pmNy6I0XQuk",
+          "mode": "list",
+          "cachedResultName": "Tenant Application Form (Responses)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1DUPS2CFrRNUaQGdpwEVZ84qAQ4uWGry4pmNy6I0XQuk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1001808731,
+          "mode": "list",
+          "cachedResultName": "Form responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1DUPS2CFrRNUaQGdpwEVZ84qAQ4uWGry4pmNy6I0XQuk/edit#gid=1001808731"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -300,
+        -60
+      ],
+      "id": "fdd8aff1-a6cd-4bb4-b5d0-6ec2c6538b0e",
+      "name": "new application submitted",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "BSWTSlpj41Dw41q1",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1-lAnTqMecTJD13Dg6bVxcz4lOnRQfd_kSFk6CyBC1SU",
+          "mode": "list",
+          "cachedResultName": "property_info_input",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-lAnTqMecTJD13Dg6bVxcz4lOnRQfd_kSFk6CyBC1SU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 523211417,
+          "mode": "list",
+          "cachedResultName": "move_in_out",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-lAnTqMecTJD13Dg6bVxcz4lOnRQfd_kSFk6CyBC1SU/edit#gid=523211417"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "form_address",
+              "lookupValue": "={{ $json[\"Address of property you are applying for? \"].replace(/\\s/g, '') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        200,
+        -60
+      ],
+      "id": "e05b7a09-2e46-46cf-a495-d7aa8a6576c9",
+      "name": "find room code and avaialble date",
+      "alwaysOutputData": false,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "0XrvAQLeCPqJCgMq",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "roomly-n8n",
+  "repo_owner": "roomly-ai",
+  "repo_path": "https://github.com/roomly-ai/roomly-n8n",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Google Sheets Trigger": {
+      "documentId": "1DUPS2CFrRNUaQGdpwEVZ84qAQ4uWGry4pmNy6I0XQuk",
+      "sheetId": 1001808731,
+      "lastIndexChecked": 326
+    },
+    "node:new application submitted": {
+      "documentId": "1DUPS2CFrRNUaQGdpwEVZ84qAQ4uWGry4pmNy6I0XQuk",
+      "sheetId": 1001808731,
+      "lastIndexChecked": 344
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-01-15T04:01:02.000Z",
+  "versionId": "5bcce051-28a7-42d2-b882-63ac68964158"
+}
