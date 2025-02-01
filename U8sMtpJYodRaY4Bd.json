@@ -1,0 +1,1595 @@
+{
+  "active": false,
+  "connections": {
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "update google_file_id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "first_rent_paid": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "find_first_last_name",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "find_listing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "share_to_all",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "share_to_all": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "find_first_last_name": {
+      "main": [
+        [
+          {
+            "node": "insert new user",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "insert new user": {
+      "main": [
+        [
+          {
+            "node": "find_in_application_form",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "find_in_application_form": {
+      "main": [
+        [
+          {
+            "node": "lease_bond_data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "lease_bond_data": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "insert new lease",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "find_listing": {
+      "main": [
+        [
+          {
+            "node": "prep_update",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update_status": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "prep_update": {
+      "main": [
+        [
+          {
+            "node": "update_status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Google Cloud Firestore",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "insert new lease": {
+      "main": [
+        [
+          {
+            "node": "update room to rented_out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update room to rented_out": {
+      "main": [
+        [
+          {
+            "node": "update messagebird display name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update messagebird display name": {
+      "main": [
+        [
+          {
+            "node": "add move_in record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update google_file_id": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-01-21T03:18:12.788Z",
+  "id": "U8sMtpJYodRaY4Bd",
+  "meta": null,
+  "name": "new_tenant_onboard",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Update Firebase database",
+        "height": 260,
+        "width": 1020,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -260,
+        280
+      ],
+      "typeVersion": 1,
+      "id": "87763239-064a-4f1f-ac68-a78198275fd5",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Update Postgres Database",
+        "height": 260,
+        "width": 980,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -260,
+        -40
+      ],
+      "typeVersion": 1,
+      "id": "70de3204-f669-471d-ac20-fcc191778038",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "authentication": "airtableTokenApi",
+        "baseId": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "id"
+        },
+        "tableId": {
+          "__rl": true,
+          "value": "tblmvcxumTwiMgxmj",
+          "mode": "id"
+        },
+        "triggerField": "first_rent_paid",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtableTrigger",
+      "typeVersion": 1,
+      "position": [
+        -640,
+        40
+      ],
+      "id": "0f780dd7-8627-4d39-bb99-16f6b9e3923f",
+      "name": "first_rent_paid",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## contract handling\nsign contract; replace old contract; update the link in airtable; send signed contract to tenant",
+        "height": 260,
+        "width": 1020
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -260,
+        -340
+      ],
+      "typeVersion": 1,
+      "id": "cdaea803-3956-41d0-85d4-5eefd13c4eae",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $json.fields.google_file_name }}",
+        "filter": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -220,
+        -240
+      ],
+      "id": "07593f9f-618e-4e7f-9d4e-a7cfe0c00199",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ZbklyFclb9zbQHiz",
+          "name": "support@roomly.com.au"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://roomlyapi-production.up.railway.app/process_pdf",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "file_id",
+              "value": "={{ $json.fields.google_file_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        100,
+        -240
+      ],
+      "id": "9145126a-f5b4-4829-b7b6-ff368b01a3e5",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "share",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Google Drive').item.json.id }}",
+          "mode": "id"
+        },
+        "permissionsUi": {
+          "permissionsValues": {
+            "role": "reader",
+            "type": "anyone"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        240,
+        -240
+      ],
+      "id": "0136a103-98d9-4eb8-b23c-b812e8f05228",
+      "name": "share_to_all",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ZbklyFclb9zbQHiz",
+          "name": "support@roomly.com.au"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('update google_file_id').item.json.fields[\"Email (from renter_email)\"][0] }}",
+        "subject": "Rental Agreement Confirmation",
+        "message": "=<!DOCTYPE html> <html lang=\"en\"> <head>     <meta charset=\"UTF-8\">     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">     <title>Rental Agreement Confirmation</title>     <style>         @media screen and (max-width: 600px) {           .content {               width: 100% !important;               display: block !important;               padding: 10px !important;           }           .header, .body, .footer {               padding: 20px !important;           }         }       </style> </head> <body style=\"font-family: 'Poppins', Arial, sans-serif\">     <table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">         <tr>             <td align=\"center\" style=\"padding: 20px;\">                 <table class=\"content\" width=\"600\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"border-collapse: collapse; border: 1px solid #cccccc;\">                     <!-- Header -->                     <tr>                         <td class=\"header\" style=\"background-color: #013399; padding: 40px; text-align: center; color: white; font-size: 24px;\">                         Rental Agreement Confirmation                         </td>                     </tr>                      <!-- Body -->                     <tr>                         <td class=\"body\" style=\"padding: 40px; text-align: left; font-size: 16px; line-height: 1.6;\">                         Dear {{ $('update google_file_id').item.json.fields['First name (from renter_email)'][0] }},                         <br><br>                          Thank you for your payment of the first month's rent. We are pleased to confirm that the rental agreement has been signed by the Rental Provider, LIMAN PTY LTD.                         <br><br>                         Your finalized rental agreement is now ready for download. Please click the link below to access your document:                         </td>                     </tr>                      <!-- Call to action Button -->                     <tr>                         <td style=\"padding: 0px 40px 0px 40px; text-align: center;\">                             <!-- CTA Button -->                             <table cellspacing=\"0\" cellpadding=\"0\" style=\"margin: auto;\">                                 <tr>                                     <td align=\"center\" style=\"background-color: #013399; padding: 20px 30px; border-radius: 15px;\">                                         <a href=\"https://drive.google.com/file/d/{{ $('update google_file_id').item.json.fields.google_file_id }}/view?usp=sharing\" target=\"_blank\" style=\"color: #ffffff; text-decoration: none; font-weight: bold;\">Download Your Rental Agreement</a>                                     </td>                                 </tr>                             </table>                         </td>                     </tr>                     <tr>                         <td class=\"body\" style=\"padding: 40px; text-align: left; font-size: 16px; line-height: 1.6;\">                             If you have any questions or require further assistance, feel free to contact us.                             Thank you for choosing our services.                           </td>                     </tr>                     <!-- Footer -->                     <tr>                         <td class=\"footer\" style=\"background-color: #013399; padding: 20px; text-align: center; color: white; font-size: 14px;\">                         Copyright &copy; 2024 | Roomly.com.au                         </td>                     </tr>                 </table>             </td>         </tr>     </table> </body> </html>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        380,
+        -240
+      ],
+      "id": "3e531cb8-4ede-4a7b-bd6e-6cb62653a51d",
+      "name": "Gmail",
+      "webhookId": "538acfab-0a38-453f-a517-abc7ed9cb0cd",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "I6AxSf6kS8kxT2iw",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "value": "public",
+          "mode": "list",
+          "cachedResultName": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "leases",
+          "mode": "list",
+          "cachedResultName": "leases"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "room_id": "={{$('lease_bond_data').first().json.room_id }}",
+            "tenant_id": "={{ $('insert new user').item.json.user_id }}",
+            "unit_id": "={{ $('lease_bond_data').first().json.unit_id }}",
+            "start_date": "={{ $('find_in_application_form').item.json[\"What's your commence date?\"].toDateTime() }}",
+            "end_date": "={{ $('find_in_application_form').item.json[\"What's your commence date?\"].toDateTime().plus(14,'weeks') }}",
+            "renewal_date": "={{ $('find_in_application_form').item.json[\"What's your commence date?\"].toDateTime().plus(14,'weeks') }}",
+            "rent_amount": "={{ $('lease_bond_data').first().json.lease_rent_amount }}",
+            "lease_status": "Future",
+            "lease_type": "Room Lease",
+            "lease_length": "={{ $('lease_bond_data').first().json.tenancy_period_weeks }}",
+            "payment_frequency": "={{ $('lease_bond_data').first().json.rent_payment_type }}",
+            "electricity": "={{ $('lease_bond_data').first().json.electricity }}",
+            "water": "={{ $('lease_bond_data').first().json.water }}",
+            "gas": "={{ $('lease_bond_data').first().json.gas }}",
+            "inventory": "={{ $('lease_bond_data').first().json.room_items }}",
+            "security_deposit": "={{ $('lease_bond_data').item.json.bond_amount }}",
+            "lease_id": "={{ $json.biggest_lease_id+1 }}",
+            "move_in_date": "={{ $('find_in_application_form').item.json[\"What's your commence date?\"].toDateTime() }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "lease_id",
+              "displayName": "lease_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "tenant_id",
+              "displayName": "tenant_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "unit_id",
+              "displayName": "unit_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "room_id",
+              "displayName": "room_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "start_date",
+              "displayName": "start_date",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "end_date",
+              "displayName": "end_date",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "rent_amount",
+              "displayName": "rent_amount",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "security_deposit",
+              "displayName": "security_deposit",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "lease_status",
+              "displayName": "lease_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "lease_type",
+              "displayName": "lease_type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "lease_length",
+              "displayName": "lease_length",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "lease_terms",
+              "displayName": "lease_terms",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "renewal_date",
+              "displayName": "renewal_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "payment_frequency",
+              "displayName": "payment_frequency",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "electricity",
+              "displayName": "electricity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "water",
+              "displayName": "water",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "gas",
+              "displayName": "gas",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "internet",
+              "displayName": "internet",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "bills_other",
+              "displayName": "bills_other",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "details_extra",
+              "displayName": "details_extra",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "payment_extra",
+              "displayName": "payment_extra",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "inventory",
+              "displayName": "inventory",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "move_in_date",
+              "displayName": "move_in_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "move_out_date",
+              "displayName": "move_out_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        580,
+        40
+      ],
+      "id": "3b8c2042-3c61-4cf9-bb81-198abd1ae740",
+      "name": "insert new lease",
+      "credentials": {
+        "postgres": {
+          "id": "H2HiZjpsabeXLbQ4",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "schema": {
+          "__rl": true,
+          "value": "public",
+          "mode": "list",
+          "cachedResultName": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "users",
+          "mode": "list",
+          "cachedResultName": "users"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "email": "={{ $json.email }}",
+            "user_type": "Tenant",
+            "first_name": "={{ $json.first_name.toUpperCase() }}",
+            "last_name": "={{ $json.last_name.toLowerCase() }}",
+            "phone_number": "={{ $json.mobile.replaceAll(\" \",\"\").replace(\"+\",\"\") }}",
+            "password_hash": "$2y$12$V08hvWePQZ4./O0Uqn69HeAC.M4NnVv9/BKMK5YaP9vsTik0wKyny"
+          },
+          "matchingColumns": [
+            "email"
+          ],
+          "schema": [
+            {
+              "id": "user_id",
+              "displayName": "user_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "user_type",
+              "displayName": "user_type",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "first_name",
+              "displayName": "first_name",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "last_name",
+              "displayName": "last_name",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "phone_number",
+              "displayName": "phone_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "password_hash",
+              "displayName": "password_hash",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "date_created",
+              "displayName": "date_created",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": false,
+              "removed": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        -60,
+        40
+      ],
+      "id": "658cff4c-ec81-4a73-8c50-280eef5baec4",
+      "name": "insert new user",
+      "credentials": {
+        "postgres": {
+          "id": "H2HiZjpsabeXLbQ4",
+          "name": "Postgres account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "list",
+          "cachedResultName": "roomly_dev",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblZIh52zo1Frq8k5",
+          "mode": "list",
+          "cachedResultName": "kyc_form",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG/tblZIh52zo1Frq8k5"
+        },
+        "filterByFormula": "={email}='{{ $json.fields[\"Email (from renter_email)\"][0] }}'",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -220,
+        40
+      ],
+      "id": "e0bf2ccc-1d28-4365-bfc6-842a34d5a00b",
+      "name": "find_first_last_name",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "list",
+          "cachedResultName": "roomly_dev",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblclUXRazaA8hnro",
+          "mode": "list",
+          "cachedResultName": "rental_application_form",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG/tblclUXRazaA8hnro"
+        },
+        "filterByFormula": "={Submission_ID} = '{{ $('find_first_last_name').item.json.from_jotfom_application_submission_ID }}'",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        100,
+        40
+      ],
+      "id": "8d17c614-eefc-4073-aa92-0aa0e23d9dd5",
+      "name": "find_in_application_form",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "list",
+          "cachedResultName": "roomly_dev",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblwRQEZWQVUSUlGt",
+          "mode": "list",
+          "cachedResultName": "lease_bond_legal",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG/tblwRQEZWQVUSUlGt"
+        },
+        "filterByFormula": "={room_id} = '{{ $('first_rent_paid').item.json.fields.room_id }}'",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        260,
+        40
+      ],
+      "id": "b1f6af1f-e267-434a-b8cf-d97342f0b0ac",
+      "name": "lease_bond_data",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT MAX(lease_id) AS biggest_lease_id FROM public.leases;\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        420,
+        40
+      ],
+      "id": "6d445d2e-dac8-4cc7-9c87-e9a0506b228d",
+      "name": "Postgres",
+      "credentials": {
+        "postgres": {
+          "id": "H2HiZjpsabeXLbQ4",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "projectId": "roomlyai",
+        "collection": "listings",
+        "updateKey": "=_id",
+        "columns": "status"
+      },
+      "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
+      "typeVersion": 1.1,
+      "position": [
+        100,
+        360
+      ],
+      "id": "bec62619-ed29-4f79-9dc5-f2d7e5c55c76",
+      "name": "update_status",
+      "credentials": {
+        "googleFirebaseCloudFirestoreOAuth2Api": {
+          "id": "LUkJxOPCfd9u3sfm",
+          "name": "Google Firebase Cloud Firestore account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "query",
+        "projectId": "roomlyai",
+        "query": "={     \"structuredQuery\":{         \"where\":{             \"fieldFilter\":{                 \"field\":{                     \"fieldPath\":\"room_id\"                 },                 \"op\":\"EQUAL\",                 \"value\":{                     \"stringValue\":\"{{ $json.fields.room_id }}\"                 }             }         },         \"from\":[{\"collectionId\":\"listings\"}]     } }"
+      },
+      "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
+      "typeVersion": 1.1,
+      "position": [
+        -200,
+        360
+      ],
+      "id": "15ddcc60-7307-4bc2-af63-8b22030542e6",
+      "name": "find_listing",
+      "credentials": {
+        "googleFirebaseCloudFirestoreOAuth2Api": {
+          "id": "LUkJxOPCfd9u3sfm",
+          "name": "Google Firebase Cloud Firestore account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2e3c5738-c621-4c97-a1f0-514ca5cdc65a",
+              "name": "status",
+              "value": "Rented",
+              "type": "string"
+            },
+            {
+              "id": "1bd94572-26d4-444e-a55d-59bb58ec6b6b",
+              "name": "_id",
+              "value": "={{ $json._id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -60,
+        360
+      ],
+      "id": "af74c945-23b0-4c84-902c-7fc34f7d982a",
+      "name": "prep_update"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "projectId": "roomlyai",
+        "collection": "digital_contacts",
+        "columns": "Lease id, Contract url"
+      },
+      "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
+      "typeVersion": 1.1,
+      "position": [
+        400,
+        360
+      ],
+      "id": "0090eb1a-8255-42d7-9eb9-b3d892db1063",
+      "name": "Google Cloud Firestore",
+      "credentials": {
+        "googleFirebaseCloudFirestoreOAuth2Api": {
+          "id": "LUkJxOPCfd9u3sfm",
+          "name": "Google Firebase Cloud Firestore account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7d5bc411-a425-42e9-a11d-be40538c17b6",
+              "name": "Lease id",
+              "value": "={{ $('first_rent_paid').item.json.fields[\"Submission ID\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "a019bef8-633d-4cdd-9c02-e951f45a2f2b",
+              "name": "Contract url",
+              "value": "=https://drive.google.com/file/d/{{ $('first_rent_paid').item.json.fields.google_file_id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        360
+      ],
+      "id": "fffc51e6-65ed-4bc3-a1c5-e98a77dca0a9",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "content": "## Update move_in_out table",
+        "height": 260,
+        "width": 500,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        780,
+        -40
+      ],
+      "typeVersion": 1,
+      "id": "68350587-dd15-490b-b85e-ad905e587873",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "list",
+          "cachedResultName": "roomly_dev",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl6j6bOat2xbAxyw",
+          "mode": "list",
+          "cachedResultName": "move_in_out",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG/tbl6j6bOat2xbAxyw"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "move_type": "IN",
+            "move_date": "={{ $('insert new lease').item.json.move_in_date }}",
+            "renter_internal_code": "={{ $json.fields[\"Display name\"] }}",
+            "tenant_id": "={{ $json.fields.user_id }}",
+            "room_id": "={{ $('update room to rented_out').item.json.fields.room_id }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "renter_internal_code",
+              "displayName": "renter_internal_code",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "move_type",
+              "displayName": "move_type",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "OUT_RENTED",
+                  "value": "OUT_RENTED"
+                },
+                {
+                  "name": "OUT_NOT_RENTED",
+                  "value": "OUT_NOT_RENTED"
+                },
+                {
+                  "name": "IN",
+                  "value": "IN"
+                },
+                {
+                  "name": "NEW_ROOM",
+                  "value": "NEW_ROOM"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "move_date",
+              "displayName": "move_date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "room_id",
+              "displayName": "room_id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "tenant_id",
+              "displayName": "tenant_id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1140,
+        40
+      ],
+      "id": "3d8b7aff-01e7-4a0c-a448-743af050e928",
+      "name": "add move_in record",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "list",
+          "cachedResultName": "roomly_dev",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl6j6bOat2xbAxyw",
+          "mode": "list",
+          "cachedResultName": "move_in_out",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG/tbl6j6bOat2xbAxyw"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "move_type": "OUT_RENTED",
+            "room_id": "={{ $('first_rent_paid').item.json.fields.room_id }}"
+          },
+          "matchingColumns": [
+            "room_id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "renter_internal_code",
+              "displayName": "renter_internal_code",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "move_type",
+              "displayName": "move_type",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "OUT_RENTED",
+                  "value": "OUT_RENTED"
+                },
+                {
+                  "name": "OUT_NOT_RENTED",
+                  "value": "OUT_NOT_RENTED"
+                },
+                {
+                  "name": "IN",
+                  "value": "IN"
+                },
+                {
+                  "name": "NEW_ROOM",
+                  "value": "NEW_ROOM"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "move_date",
+              "displayName": "move_date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "room_id",
+              "displayName": "room_id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "tenant_id",
+              "displayName": "tenant_id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        820,
+        40
+      ],
+      "id": "a41c288b-765a-4511-9bc8-7ad38a75f83a",
+      "name": "update room to rented_out",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "list",
+          "cachedResultName": "roomly_dev",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl7Szz7Es7xAss6L",
+          "mode": "list",
+          "cachedResultName": "messagebird_contacts",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG/tbl7Szz7Es7xAss6L"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Email": "={{ $('first_rent_paid').item.json.fields[\"Email (from renter_email)\"][0] }}",
+            "Display name": "=F_R_{{ $('lease_bond_data').item.json.roomly_code }}_{{ $('insert new lease').item.json.start_date.toDateTime().format('yyyyMMdd') }}",
+            "First name": "={{ $('find_first_last_name').item.json.first_name.toUpperCase() }}",
+            "Last name": "={{ $('find_first_last_name').item.json.last_name.toUpperCase() }}",
+            "user_id": "={{ $('insert new user').item.json.user_id }}"
+          },
+          "matchingColumns": [
+            "Email"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Display name",
+              "displayName": "Display name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "First name",
+              "displayName": "First name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Last name",
+              "displayName": "Last name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Phone",
+              "displayName": "Phone",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "user_id",
+              "displayName": "user_id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "mobile_roomly_formatted",
+              "displayName": "mobile_roomly_formatted",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "contract_signed",
+              "displayName": "contract_signed",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        980,
+        40
+      ],
+      "id": "eb9f00f0-f16e-49a7-8508-d9ec18627323",
+      "name": "update messagebird display name",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "list",
+          "cachedResultName": "roomly_dev",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblmvcxumTwiMgxmj",
+          "mode": "list",
+          "cachedResultName": "contract_signed",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG/tblmvcxumTwiMgxmj"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "google_file_name": "={{ $json.name }}",
+            "google_file_id": "={{ $json.id }}"
+          },
+          "matchingColumns": [
+            "google_file_name"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Submission ID",
+              "displayName": "Submission ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "renter_email",
+              "displayName": "renter_email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "google_file_name",
+              "displayName": "google_file_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "google_file_id",
+              "displayName": "google_file_id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "first_rent_paid",
+              "displayName": "first_rent_paid",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "submission_url",
+              "displayName": "submission_url",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -80,
+        -240
+      ],
+      "id": "ef3090a1-0ebe-4c3d-9272-f7f865c0e66d",
+      "name": "update google_file_id",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "roomly-n8n",
+  "repo_owner": "roomly-ai",
+  "repo_path": "https://github.com/roomly-ai/roomly-n8n",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-01-25T08:24:35.000Z",
+  "versionId": "c83749b1-51b3-4381-a7e6-9fca5fe6b3a6"
+}
