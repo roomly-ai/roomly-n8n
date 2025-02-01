@@ -1,0 +1,436 @@
+{
+  "active": false,
+  "connections": {
+    "Airtable Trigger": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-12-24T06:42:09.084Z",
+  "id": "DZ0HoHLvjGaYc03y",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Maintenance Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "authentication": "airtableTokenApi",
+        "baseId": {
+          "__rl": true,
+          "value": "https://airtable.com/app5Cj5E9PTUQgzU4/",
+          "mode": "url"
+        },
+        "tableId": {
+          "__rl": true,
+          "value": "https://airtable.com/app5Cj5E9PTUQgzU4/tblNZI0M0zA58ugVa/",
+          "mode": "url"
+        },
+        "triggerField": "Created Time",
+        "additionalFields": {}
+      },
+      "id": "ae62fc3e-6b5e-46db-b39b-2431c5e607ac",
+      "name": "Airtable Trigger",
+      "type": "n8n-nodes-base.airtableTrigger",
+      "typeVersion": 1,
+      "position": [
+        740,
+        400
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "AphsdcYULqWafp7f",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Please take the following description: {{ $json.fields.Description }} and create a 3 to 5 word title. Please do not include any unecessary words like \"Title:\" or any other unwanted extraneous words. "
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e37a99db-d492-4903-a759-296684863afd",
+      "name": "OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.7,
+      "position": [
+        960,
+        400
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "euOM3mlSKmXwLvXO",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "base": {
+          "__rl": true,
+          "value": "app5Cj5E9PTUQgzU4",
+          "mode": "list",
+          "cachedResultName": "Roomly Maintenance Requests",
+          "cachedResultUrl": "https://airtable.com/app5Cj5E9PTUQgzU4"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblNZI0M0zA58ugVa",
+          "mode": "list",
+          "cachedResultName": "Maintenance Request Form Input",
+          "cachedResultUrl": "https://airtable.com/app5Cj5E9PTUQgzU4/tblNZI0M0zA58ugVa"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Job Number",
+              "displayName": "Job Number",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Created Time",
+              "displayName": "Created Time",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Task Name",
+              "displayName": "Task Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Room Code",
+              "displayName": "Room Code",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Tenant Name",
+              "displayName": "Tenant Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Tenant Phone Number",
+              "displayName": "Tenant Phone Number",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Tenant Email Address",
+              "displayName": "Tenant Email Address",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Media",
+              "displayName": "Media",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Address",
+              "displayName": "Address",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Assignee",
+              "displayName": "Assignee",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Priority",
+              "displayName": "Priority",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Urgent",
+                  "value": "Urgent"
+                },
+                {
+                  "name": "High",
+                  "value": "High"
+                },
+                {
+                  "name": "Normal",
+                  "value": "Normal"
+                },
+                {
+                  "name": "Low",
+                  "value": "Low"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "TO DO",
+                  "value": "TO DO"
+                },
+                {
+                  "name": "IN PROGRESS",
+                  "value": "IN PROGRESS"
+                },
+                {
+                  "name": "COMPLETE",
+                  "value": "COMPLETE"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Due Date",
+              "displayName": "Due Date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estimated Hours",
+              "displayName": "Estimated Hours",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Actual Hours",
+              "displayName": "Actual Hours",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Last Modified",
+              "displayName": "Last Modified",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "aec67a1f-6113-40ed-b09c-e0a7b7059c37",
+      "name": "Airtable",
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        960,
+        620
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "AphsdcYULqWafp7f",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C0693HSCG9J",
+          "mode": "list",
+          "cachedResultName": "maintenance"
+        },
+        "text": "=<@U07KA2L0F0D> \n\n  {\n    \"type\": \"section\",\n    \"text\": {\n      \"type\": \"mrkdwn\",\n      \"text\": \"Task Name: \" + $('Airtable Trigger').item.json.fields['Task Name'] + \"\\nTenant Name: \" + $('Airtable Trigger').item.json.fields['Tenant Name'] + \"\\nRoomy Code: \" + $('Airtable Trigger').item.json.fields['Room Code'] + \"\\nTenant Phone Number: \" + $('Airtable Trigger').item.json.fields['Tenant Phone Number'] + \"\\nTenant Email Address: \" + $('Airtable Trigger').item.json.fields['Tenant Email Address'] + \"\\nDescription: \" + $('Airtable Trigger').item.json.fields.Description + \"\\nMedia: \" + $('Airtable Trigger').item.json.fields.Media[0].url\n    }\n  }\n]) }}```",
+        "otherOptions": {}
+      },
+      "id": "32d80106-7137-48b9-8b0c-9908317d0a8f",
+      "name": "Slack",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        1340,
+        400
+      ],
+      "webhookId": "301c08ff-65a7-4e30-bbfa-db51c1f37397",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "vQp7BR45bihPVTtF",
+          "name": "Slack account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "roomly-n8n",
+  "repo_owner": "roomly-ai",
+  "repo_path": "https://github.com/roomly-ai/roomly-n8n",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2024-12-24T07:05:59.204Z",
+      "updatedAt": "2024-12-24T07:05:59.204Z",
+      "id": "YU6BqzlIZIVPOeup",
+      "name": "Maintenance"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2024-12-26T23:50:12.000Z",
+  "versionId": "8e739faa-c2de-454f-8f49-e8bee0731114"
+}
