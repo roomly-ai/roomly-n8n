@@ -1,0 +1,430 @@
+{
+  "active": true,
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "arrange-access",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "accounts",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "routine-inspection",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "unkown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-01-08T04:23:21.042Z",
+  "id": "UyJ7wxnEYDFDZBeI",
+  "meta": null,
+  "name": "forward_work_email_and_post_on_slack",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -440,
+        0
+      ],
+      "id": "ffffa844-3ed7-4ca2-a3ad-9b645d3cc5c9",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "I6AxSf6kS8kxT2iw",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5a567511-40d7-4588-8934-4873e8fa7efb",
+              "leftValue": "={{ $json.from.value[0].address }}",
+              "rightValue": "ada1234.li@gmail.com",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        -280,
+        0
+      ],
+      "id": "e9aeebd6-d402-4d39-b22b-566e796a5156",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Your task is to summarize email content forwarded from a email account. You will receive requests about reminder of payment, inspection request or request of service.Analyze the content and prepare a summary report. It should contain an overall sentiment regarding the event, category of the request and summary of the content.\nReply in Markdown formatting\nSummary is not more than 50 words\nCategory to service requet, payment reminder or routine inspection only, if can not categorize then set category as unknown\nservice request generally include keyword like smoke alarm service etc.",
+              "role": "system"
+            },
+            {
+              "content": "=Sentiment, Category and Summary of the content:\n{{ $json.text }}"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.7,
+      "position": [
+        -120,
+        0
+      ],
+      "id": "c132d4f9-f55d-48aa-bd05-10bdc4a0c59e",
+      "name": "OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "ASOiAIC6Muob4zyk",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message.content.category }}",
+                    "rightValue": "service request",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "arrange-access"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "9a230eb6-e5ca-4648-b86a-507f9ea2638c",
+                    "leftValue": "={{ $json.message.content.category }}",
+                    "rightValue": "payment reminder",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "accounts"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "6bb36d51-d0a7-4f12-9429-b169214b06f8",
+                    "leftValue": "={{ $json.message.content.category }}",
+                    "rightValue": "inspection request",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "routine-inspection"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "bad8605e-a87e-422c-a5fa-42e589983522",
+                    "leftValue": "={{ $json.message.content.category }}",
+                    "rightValue": "unknown",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "unkown"
+            }
+          ]
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        180,
+        -20
+      ],
+      "id": "09fa94b8-4474-42a4-985a-caf1eabdcf70",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C06CBCV2JGG",
+          "mode": "list",
+          "cachedResultName": "arrange-access"
+        },
+        "text": "=NEW {{ $json.message.content.category.toTitleCase() }}\n<@U069X5AA5FA>\nNew email forwarded to support@roomly.com.au, \nsentiment: {{ $json.message.content.sentiment }}\ntitle: {{ $('Gmail Trigger').item.json.subject }}\nsummary: {{ $json.message.content.summary }}\n\nplease try to book appointment and arrange with <@U07KA2L0F0D> for completion of task",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        380,
+        -200
+      ],
+      "id": "f15ae98f-c20c-4f9d-9a27-58201ce114da",
+      "name": "arrange-access",
+      "webhookId": "169b8234-f6b3-4fdb-95df-56f09e06a3a1",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "vQp7BR45bihPVTtF",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C069115JXQT",
+          "mode": "list",
+          "cachedResultName": "accounts"
+        },
+        "text": "=NEW {{ $json.message.content.category }}\n<@U069X5AA5FA><@U06197AJUJE>\nNew email forwarded to support@roomly.com.au, \nsentiment: {{ $json.message.content.sentiment }}\ntitle: {{ $('Gmail Trigger').item.json.subject }}\nsummary: {{ $json.message.content.summary }}\n\nKindly make payment for completion of task",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        380,
+        -60
+      ],
+      "id": "72921dd4-4bf0-44ac-abae-73035f563abf",
+      "name": "accounts",
+      "webhookId": "169b8234-f6b3-4fdb-95df-56f09e06a3a1",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "vQp7BR45bihPVTtF",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C07SCG85F6Z",
+          "mode": "list",
+          "cachedResultName": "routine-inspection"
+        },
+        "text": "=NEW {{ $json.message.content.category }} From Agent\n<@U069X5AA5FA><@U06197A55H8><@U07KA2L0F0D><@U06197AJUJE>\nNew email forwarded to support@roomly.com.au, \nsentiment: {{ $json.message.content.sentiment }}\ntitle: {{ $('Gmail Trigger').item.json.subject }}\nsummary: {{ $json.message.content.summary }}\nKindly follow the following guide to compelete the task:\n1. decide the date and time \n2. reply the email and update the comfirmation <@U06197A55H8>\n3. create event through internal event form <@U069X5AA5FA>\n4. arrange for removal and reinstallation of the wall if needed <@U07KA2L0F0D>\n5. Be present for the inspection <@U07KA2L0F0D> , some cleaning and tidy up might be necessary\n6. Update here for the routine inspection feedback if any <@U07KA2L0F0D>",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        380,
+        80
+      ],
+      "id": "292cc0f0-6de1-48f1-bc39-d6d1e2975ee6",
+      "name": "routine-inspection",
+      "webhookId": "169b8234-f6b3-4fdb-95df-56f09e06a3a1",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "vQp7BR45bihPVTtF",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "user",
+        "user": {
+          "__rl": true,
+          "value": "U06197A55H8",
+          "mode": "list",
+          "cachedResultName": "ada1234.li"
+        },
+        "text": "=Categorization Failed from forwarded email\nsummary: ",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        380,
+        220
+      ],
+      "id": "aa948683-bf75-4635-828f-7dc06ead5492",
+      "name": "unkown",
+      "webhookId": "a5268909-f8fb-4512-90b6-b65e6faff6d2",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "vQp7BR45bihPVTtF",
+          "name": "Slack account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "roomly-n8n",
+  "repo_owner": "roomly-ai",
+  "repo_path": "https://github.com/roomly-ai/roomly-n8n",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Gmail Trigger": {
+      "Gmail Trigger": {
+        "lastTimeChecked": 1738377978,
+        "possibleDuplicates": [
+          "194bf66e6dbbe655",
+          "194bf14970b63e18"
+        ]
+      }
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-01-24T05:19:21.000Z",
+  "versionId": "4f9330b1-4aee-4f6b-aae1-bd3271204c40"
+}
