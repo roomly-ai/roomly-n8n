@@ -1,0 +1,21 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2025-01-25T08:55:25.807Z",
+  "id": "ZtNeYlUSlDPtQGlv",
+  "meta": null,
+  "name": "messagebird_auto_reply",
+  "nodes": [],
+  "pinData": {},
+  "repo_name": "roomly-n8n",
+  "repo_owner": "roomly-ai",
+  "repo_path": "https://github.com/roomly-ai/roomly-n8n",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-01-25T08:55:25.807Z",
+  "versionId": "496003cc-d214-4073-b2b7-e46bb5697257"
+}
