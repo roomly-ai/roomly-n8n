@@ -1,0 +1,881 @@
+{
+  "active": false,
+  "connections": {
+    "update messagebird": {
+      "main": [
+        [
+          {
+            "node": "find_contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "room_code and empty from": {
+      "main": [
+        [
+          {
+            "node": "Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "prep_application_form_info": {
+      "main": [
+        [
+          {
+            "node": "prep_room_legal_info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "prep_room_legal_info": {
+      "main": [
+        [
+          {
+            "node": "rp details table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "rp details table": {
+      "main": [
+        [
+          {
+            "node": "readable mapping",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "readable mapping": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "send contract for sign",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update_google_contact": {
+      "main": [
+        []
+      ]
+    },
+    "create_new_google_contact": {
+      "main": [
+        []
+      ]
+    },
+    "Slack": {
+      "main": [
+        [
+          {
+            "node": "update messagebird",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "find_contact": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "update_google_contact",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "create_new_google_contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "new_kyc_record_added": {
+      "main": [
+        [
+          {
+            "node": "prep_application_form_info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "new_application_record_added": {
+      "main": [
+        [
+          {
+            "node": "room_code and empty from",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "send contract for sign": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "createdAt": "2025-01-12T09:47:56.142Z",
+  "id": "qpG5X3qEqsM92DRv",
+  "meta": null,
+  "name": "rent_out_process",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## New application received\n** update airtable # jotform | ",
+        "height": 360,
+        "width": 1280,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1360,
+        -560
+      ],
+      "typeVersion": 1,
+      "id": "b7e354b5-106a-4640-89e5-3a3a19fd6f7d",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Form Submission\n** application form submitted\n** KYC form submitted",
+        "height": 720,
+        "width": 420
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1820,
+        -560
+      ],
+      "typeVersion": 1,
+      "id": "d19d31f1-599b-4947-bb9e-0f7ad1509e3b",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.bird.com/workspaces/2a3cf75b-1b9d-477d-9cbd-5ac0dbef8bc1/flows/4030bf7b-05c5-4179-8349-cfd1b273820d/invoke-sync",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"Display name\": \"Applied Potential Tenant\",\n    \"Email\": \"{{ $('new_application_record_added').item.json.fields.Email }}\",\n    \"First name\": \"{{ $('new_application_record_added').item.json.fields[\"Name On Passport\"] }}\",\n    \"Last name\": \"\",\n    \"Phone\": \"{{ $('new_application_record_added').item.json.fields[\"What's your mobile number?\"].replaceAll(\" \",\"\") }}\"\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -920,
+        -460
+      ],
+      "id": "492392b1-5fbb-4ac8-9eb7-4be178419937",
+      "name": "update messagebird",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "content": "## New KYC Form Submitted\n**use jotform api to create a new submission",
+        "height": 300,
+        "width": 1260
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1340,
+        -140
+      ],
+      "typeVersion": 1,
+      "id": "b3e47565-355b-4c92-a94c-83c89979ec74",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C06914HQMPU",
+          "mode": "list",
+          "cachedResultName": "room-applications"
+        },
+        "messageType": "block",
+        "blocksUi": "={\n\t\"blocks\": [\n\t\t{\n\t\t\t\"type\": \"section\",\n\t\t\t\"text\": {\n\t\t\t\t\"type\": \"mrkdwn\",\n\t\t\t\t\"text\": \" \"\n\t\t\t},\n\t\t\t\"accessory\": {\n\t\t\t\t\"type\": \"button\",\n\t\t\t\t\"text\": {\n\t\t\t\t\t\"type\": \"plain_text\",\n\t\t\t\t\t\"text\": \"Approve or Reject\",\n\t\t\t\t\t\"emoji\": true\n\t\t\t\t},\n\t\t\t\t\"value\": \"approve\",\n\t\t\t\t\"url\": \"\",\n\t\t\t\t\"action_id\": \"button-action\"\n\t\t\t}\n\t\t},\n\t\t{\n\t\t\t\"type\": \"section\",\n\t\t\t\"fields\": [\n\t\t\t\t{\n\t\t\t\t\t\"type\": \"plain_text\",\n\t\t\t\t\t\"text\": \"🏠 {{ $json.renter_internal_code.split(\"_\")[2] }}\",\n\t\t\t\t\t\"emoji\": true\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"type\": \"plain_text\",\n\t\t\t\t\t\"text\": \"🈳 {{ $json.move_date }}\",\n\t\t\t\t\t\"emoji\": true\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"type\": \"plain_text\",\n\t\t\t\t\t\"text\": \"🚛 \",\n\t\t\t\t\t\"emoji\": true\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"type\": \"plain_text\",\n\t\t\t\t\t\"text\": \"🪪 {{ $('new_application_record_added').first().json.fields[\"Name On Passport\"] }}\",\n\t\t\t\t\t\"emoji\": true\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"type\": \"plain_text\",\n\t\t\t\t\t\"text\": \"🌐 {{ $('new_application_record_added').first().json.fields[\"Country Of Issue\"] }}\",\n\t\t\t\t\t\"emoji\": true\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"type\": \"plain_text\",\n\t\t\t\t\t\"text\": \"👭 {{ $('new_application_record_added').first().json.fields[\"If so, by whom?\"] }}\",\n\t\t\t\t\t\"emoji\": true\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"type\": \"plain_text\",\n\t\t\t\t\t\"text\": \"🧑‍🎓 {{ $('new_application_record_added').first().json.fields[\"Please tell us about your highest education level and qualifications\"] }}\",\n\t\t\t\t\t\"emoji\": true\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"type\": \"plain_text\",\n\t\t\t\t\t\"text\": \"🕰️💼 {{ $('new_application_record_added').first().json.fields[\"What did you do for work before moving to Australia?\"] }}\",\n\t\t\t\t\t\"emoji\": true\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"type\": \"plain_text\",\n\t\t\t\t\t\"text\": \"🇦🇺💼 {{ $('new_application_record_added').first().json.fields[\"What do you do for work in Australia?\"] }}\",\n\t\t\t\t\t\"emoji\": true\n\t\t\t\t}\n\t\t\t]\n\t\t}\n\t]\n}",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        -1120,
+        -460
+      ],
+      "id": "f9954c86-94f0-414e-b6ab-3d9503535ade",
+      "name": "Slack",
+      "webhookId": "07b22cd8-12e2-41ab-aaee-76e8d3429ae7",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "vQp7BR45bihPVTtF",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "list",
+          "cachedResultName": "roomly_dev",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl6j6bOat2xbAxyw",
+          "mode": "list",
+          "cachedResultName": "move_in_out",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG/tbl6j6bOat2xbAxyw"
+        },
+        "filterByFormula": "=AND({room_id} = {{ $json.fields.room_id_number }},OR({move_type} = \"OUT_NOT_RENT\",{move_type} = \"OUT_RENTED\") )",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -1300,
+        -460
+      ],
+      "id": "a47c8b13-f9dc-402a-a414-923204600044",
+      "name": "room_code and empty from",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "base": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "list",
+          "cachedResultName": "roomly_dev",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblclUXRazaA8hnro",
+          "mode": "list",
+          "cachedResultName": "rental_application_form",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG/tblclUXRazaA8hnro"
+        },
+        "id": "={{ $json.fields.linked_application_submission[0] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -1120,
+        -40
+      ],
+      "id": "abc5ff35-8a52-4efc-bf89-9ca5bc344613",
+      "name": "prep_application_form_info",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "base": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "list",
+          "cachedResultName": "roomly_dev",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblwRQEZWQVUSUlGt",
+          "mode": "list",
+          "cachedResultName": "lease_bond_legal",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG/tblwRQEZWQVUSUlGt"
+        },
+        "id": "={{ $json.room_id[0] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -940,
+        -40
+      ],
+      "id": "3b73c7ad-ada9-4a37-9700-7e67a5dfe4a8",
+      "name": "prep_room_legal_info",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "base": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "list",
+          "cachedResultName": "roomly_dev",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblH4ELZwRntCKAec",
+          "mode": "list",
+          "cachedResultName": "lease_rental_provider",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG/tblH4ELZwRntCKAec"
+        },
+        "id": "={{ $json.lease_rp[0] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -780,
+        -40
+      ],
+      "id": "9ca7d19e-d231-4620-8e18-60552fa4901b",
+      "name": "rp details table",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b9007ca6-6be6-4e0f-b052-6c982f959c9c",
+              "name": "rp_name",
+              "value": "={{ $json.company_landlord_name }}",
+              "type": "string"
+            },
+            {
+              "id": "86ff50a7-8a8e-411b-a48c-411593394fa9",
+              "name": "rp_acn",
+              "value": "={{ $json.acn_if_any }}",
+              "type": "string"
+            },
+            {
+              "id": "48c704f8-83f9-44f7-961a-4f8ea77cefeb",
+              "name": "rp_mobile",
+              "value": "={{ $json.rp_phone }}",
+              "type": "string"
+            },
+            {
+              "id": "64ebcacf-df4a-4944-86a3-9060c1faf663",
+              "name": "rp_address",
+              "value": "={{ $json.rp_address }}",
+              "type": "string"
+            },
+            {
+              "id": "51ae9cfa-4a60-4025-9c2f-c0b54ae1af94",
+              "name": "rp_postcode",
+              "value": "={{ $json.rp_postcode }}",
+              "type": "string"
+            },
+            {
+              "id": "e60ecee7-9ecc-4849-88eb-26d6ad933d0a",
+              "name": "rp_email",
+              "value": "={{ $json.rp_email }}",
+              "type": "string"
+            },
+            {
+              "id": "73b9461e-3468-4aa8-ada2-b853ee5a2932",
+              "name": "r_name_1",
+              "value": "={{ $('new_kyc_record_added').item.json.fields.first_name.toUpperCase().concat(\" \",$('new_kyc_record_added').item.json.fields.last_name.toUpperCase()) }}",
+              "type": "string"
+            },
+            {
+              "id": "98d6e4d0-f544-4da4-a160-b997338ead29",
+              "name": "r_mobile_1",
+              "value": "={{ $('new_kyc_record_added').item.json.fields.mobile }}",
+              "type": "string"
+            },
+            {
+              "id": "57c8d2cb-8ded-4aa7-a3ea-2101bf3e0dd4",
+              "name": "end_date",
+              "value": "={{ $('prep_application_form_info').item.json[\"What's your commence date?\"].toDateTime().plus(14, 'weeks').format('dd-LLL-yyyy') }}",
+              "type": "string"
+            },
+            {
+              "id": "979d3198-501a-45c6-922b-8a9dbc37ef65",
+              "name": "bond_amount",
+              "value": "={{ $('prep_room_legal_info').item.json.bond_amount }}",
+              "type": "string"
+            },
+            {
+              "id": "604557d6-d842-4139-9f01-7635aec93d17",
+              "name": "bond_payment_date",
+              "value": "={{ $('prep_application_form_info').item.json[\"What's your commence date?\"].toDateTime().format('dd-LLL-yyyy') }}",
+              "type": "string"
+            },
+            {
+              "id": "a9997a69-889c-4e5d-bc48-7553a6fca79a",
+              "name": "rent_amount",
+              "value": "={{ $('prep_room_legal_info').item.json.lease_rent_amount }}",
+              "type": "string"
+            },
+            {
+              "id": "6353aad7-a99e-4646-9bb4-daef550aac74",
+              "name": "emergency_name",
+              "value": "={{ $('prep_room_legal_info').item.json.lease_emergency_name }}",
+              "type": "string"
+            },
+            {
+              "id": "5bd1aebc-470a-48ab-84b9-ec5ee4f38113",
+              "name": "emergency_email",
+              "value": "={{ $('prep_room_legal_info').item.json.lease_emergency_email }}",
+              "type": "string"
+            },
+            {
+              "id": "45b9e307-b3a8-4a02-ac8b-888e2301495d",
+              "name": "emergency_mobile",
+              "value": "={{ $('prep_room_legal_info').item.json.lease_emergency_mobile }}",
+              "type": "string"
+            },
+            {
+              "id": "85062977-7dfa-4221-a878-d00893ef14c5",
+              "name": "address_of_premises",
+              "value": "={{ $('prep_room_legal_info').item.json.bond_address }}",
+              "type": "string"
+            },
+            {
+              "id": "74c10e38-3047-4642-a40d-f4e256290836",
+              "name": "postcode_of_premises",
+              "value": "={{ $('prep_room_legal_info').item.json.rtba_postcode }}",
+              "type": "string"
+            },
+            {
+              "id": "fe19bb92-2e45-4ddb-ad62-587061a1af82",
+              "name": "check_payment_per",
+              "value": "={{ [$('prep_room_legal_info').item.json.rent_payment_type] }}",
+              "type": "array"
+            },
+            {
+              "id": "1081a059-cba6-4c10-beda-cd99503fa8be",
+              "name": "check_lenth_of_agreement",
+              "value": "={{ [$('prep_room_legal_info').item.json.tenancy_type] }}",
+              "type": "array"
+            },
+            {
+              "id": "9259dab4-0877-4ffc-855e-c484f43a42f3",
+              "name": "payment_methods",
+              "value": "={{ [$('prep_room_legal_info').item.json.payment_method] }}",
+              "type": "array"
+            },
+            {
+              "id": "6adc168f-3399-4617-b1d7-3780c5f2dcb3",
+              "name": "payment_details",
+              "value": "={{ $('prep_room_legal_info').item.json.payment_details.concat($('prep_room_legal_info').item.json.roomly_code) }}",
+              "type": "string"
+            },
+            {
+              "id": "4c3838ed-bfa2-42b8-891d-b80b15dd29bc",
+              "name": "rp_items",
+              "value": "={{ $('prep_room_legal_info').item.json.room_items }}",
+              "type": "string"
+            },
+            {
+              "id": "4cc4ce49-ad24-486e-8998-4da20b3f1691",
+              "name": "electricity",
+              "value": "={{ [$('prep_room_legal_info').item.json.electricity] }}",
+              "type": "array"
+            },
+            {
+              "id": "54b35312-62f4-402c-8034-9f5c7e3c1950",
+              "name": "water",
+              "value": "={{ [$('prep_room_legal_info').item.json.water] }}",
+              "type": "array"
+            },
+            {
+              "id": "b5a78526-b6f2-45e1-8fb1-284014d66572",
+              "name": "gas",
+              "value": "={{ [$('prep_room_legal_info').item.json.gas] }}",
+              "type": "array"
+            },
+            {
+              "id": "108c5b7f-ac5e-46a9-b549-a3f174a8d4f6",
+              "name": "internet",
+              "value": "={{ [$('prep_room_legal_info').item.json.internet] }}",
+              "type": "array"
+            },
+            {
+              "id": "d82e2994-6e80-4312-931a-19c03b334492",
+              "name": "r_email_1",
+              "value": "={{ $('new_kyc_record_added').item.json.fields.email }}",
+              "type": "string"
+            },
+            {
+              "id": "4a5aebf2-2933-4032-82d2-eb5c62c199a1",
+              "name": "start_date",
+              "value": "={{ $('prep_application_form_info').item.json[\"What's your commence date?\"].toDateTime().format('dd-LLL-yyyy') }}",
+              "type": "string"
+            },
+            {
+              "id": "ed593ded-d1df-4d30-b387-fdd006ba6296",
+              "name": "first_payment_date",
+              "value": "={{ $today.toDateTime().format('dd-LLL-yyyy') }}",
+              "type": "string"
+            },
+            {
+              "id": "4def817f-71fa-497e-936f-4435353c20c8",
+              "name": "additional_terms",
+              "value": "={{ $('prep_room_legal_info').item.json.details_extra }}",
+              "type": "string"
+            },
+            {
+              "id": "97575280-7c37-4a9d-b77e-14488bc74a2d",
+              "name": "payment_date",
+              "value": "={{ \"each \".concat($('prep_application_form_info').item.json[\"What's your commence date?\"].toDateTime().setLocale('au-me').weekdayLong,\" every other week\") }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -620,
+        -40
+      ],
+      "id": "2b45fbb7-81e4-40c7-8ef2-570c61a72466",
+      "name": "readable mapping"
+    },
+    {
+      "parameters": {
+        "jsCode": "let url_prefill = [];\nlet temp = $input.all()[0].json['rp_name']\nlet keys = Object.keys($input.all()[0].json)\n\nfor (var key of keys){\n  let url_parameter = key.concat(\"=\",$input.all()[0].json[key])\n  url_prefill.push(url_parameter)\n}\nurl_options = url_prefill.join(\"&\")\nuri = \"https://www.jotform.com/250098930545057?\".concat(url_options)\nencoded = encodeURI(uri);\nreturn {encoded}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -460,
+        -40
+      ],
+      "id": "83b51ff8-9078-4ced-a1b9-03baaa785dcc",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "contactId": "={{ $json.contactId }}",
+        "updateFields": {
+          "givenName": "={{ $('new_application_record_added').item.json.fields[\"Name On Passport\"] }}",
+          "companyUi": {
+            "companyValues": [
+              {
+                "name": "Applied Potential Tenant"
+              }
+            ]
+          },
+          "phoneUi": {
+            "phoneValues": [
+              {
+                "type": "home",
+                "value": "={{ $('new_application_record_added').item.json.fields[\"What's your mobile number?\"] }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleContacts",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        -540
+      ],
+      "id": "7967550f-b89e-4fd2-8bbf-b0d13432de66",
+      "name": "update_google_contact",
+      "credentials": {
+        "googleContactsOAuth2Api": {
+          "id": "4nazf9NpiCzX9JYa",
+          "name": "Google Contacts account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "givenName": "={{ $('new_application_record_added').item.json.fields[\"Name On Passport\"] }}",
+        "additionalFields": {
+          "companyUi": {
+            "companyValues": [
+              {
+                "name": "Applied Potential Tenant"
+              }
+            ]
+          },
+          "emailsUi": {
+            "emailsValues": [
+              {
+                "type": "home",
+                "value": "={{ $('new_application_record_added').item.json.fields[\"Email\"] }}"
+              }
+            ]
+          },
+          "phoneUi": {
+            "phoneValues": [
+              {
+                "type": "mobile",
+                "value": "={{ $('new_application_record_added').item.json.fields[\"What's your mobile number?\"] }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleContacts",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        -380
+      ],
+      "id": "ec39aefd-c786-44b1-b469-ae7f2e784fc0",
+      "name": "create_new_google_contact",
+      "credentials": {
+        "googleContactsOAuth2Api": {
+          "id": "4nazf9NpiCzX9JYa",
+          "name": "Google Contacts account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "fields": [
+          "emailAddresses"
+        ],
+        "useQuery": true,
+        "query": "={{ $('new_application_record_added').item.json.fields.Email }}"
+      },
+      "type": "n8n-nodes-base.googleContacts",
+      "typeVersion": 1,
+      "position": [
+        -720,
+        -460
+      ],
+      "id": "2a0d7448-bf1b-406c-9dfe-5a4979dd0f26",
+      "name": "find_contact",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleContactsOAuth2Api": {
+          "id": "4nazf9NpiCzX9JYa",
+          "name": "Google Contacts account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "30e89bef-6345-4681-a9b1-e9e392cfc053",
+              "leftValue": "={{ $json.isNotEmpty() }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -540,
+        -460
+      ],
+      "id": "cf79f7a3-2729-461d-9052-c31cbb213081",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "authentication": "airtableTokenApi",
+        "baseId": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "id"
+        },
+        "tableId": {
+          "__rl": true,
+          "value": "tblZIh52zo1Frq8k5",
+          "mode": "id"
+        },
+        "triggerField": "linked_application_submission",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtableTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1580,
+        -40
+      ],
+      "id": "c0b6e4f7-8ee2-42ba-99c7-4ff965db2d3c",
+      "name": "new_kyc_record_added",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "authentication": "airtableTokenApi",
+        "baseId": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "id"
+        },
+        "tableId": {
+          "__rl": true,
+          "value": "tblclUXRazaA8hnro",
+          "mode": "id"
+        },
+        "triggerField": "room_id",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtableTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1580,
+        -460
+      ],
+      "id": "2f3a092c-6c85-43a8-b1db-412c10f6ea79",
+      "name": "new_application_record_added",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('readable mapping').item.json.r_email_1 }}",
+        "subject": "ROOMLY Online Rental Agreement",
+        "message": "=<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Your Online Rental Agreement is Ready for Signature!</title>\n    <style>\n        @media screen and (max-width: 600px) {\n          .content {\n              width: 100% !important;\n              display: block !important;\n              padding: 10px !important;\n          }\n          .header, .body, .footer {\n              padding: 20px !important;\n          }\n        }\n      </style>\n</head>\n<body style=\"font-family: 'Poppins', Arial, sans-serif\">\n    <table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n        <tr>\n            <td align=\"center\" style=\"padding: 20px;\">\n                <table class=\"content\" width=\"600\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"border-collapse: collapse; border: 1px solid #cccccc;\">\n                    <!-- Header -->\n                    <tr>\n                        <td class=\"header\" style=\"background-color: #013399; padding: 40px; text-align: center; color: white; font-size: 24px;\">\n                        Your Online Rental Agreement is Ready for Signature!\n                        </td>\n                    </tr>\n\n                    <!-- Body -->\n                    <tr>\n                        <td class=\"body\" style=\"padding: 40px; text-align: left; font-size: 16px; line-height: 1.6;\">\n                        Hello, there <br>\n                        Congratulations! You're just two steps away from securing your new room with ROOMLY.\n                        <br><br>\n                        Please click the button below to sign your rental agreement and complete the payment for your first two weeks' rent. Once this is done, you'll be all set to move into your new space within 24 hours.\n                        </td>\n                    </tr>\n\n                    <!-- Call to action Button -->\n                    <tr>\n                        <td style=\"padding: 0px 40px 0px 40px; text-align: center;\">\n                            <!-- CTA Button -->\n                            <table cellspacing=\"0\" cellpadding=\"0\" style=\"margin: auto;\">\n                                <tr>\n                                    <td align=\"center\" style=\"background-color: #013399; padding: 20px 30px; border-radius: 15px;\">\n                                        <a href=\"{{ $json.encoded }}\" target=\"_blank\" style=\"color: #ffffff; text-decoration: none; font-weight: bold;\">Sign Your Rental Agreement</a>\n                                    </td>\n                                </tr>\n                            </table>\n                        </td>\n                    </tr>\n                    <tr>\n                        <td class=\"body\" style=\"padding: 40px; text-align: left; font-size: 16px; line-height: 1.6;\">\n                            We look forward to welcoming you to your new home!             \n                        </td>\n                    </tr>\n                    <!-- Footer -->\n                    <tr>\n                        <td class=\"footer\" style=\"background-color: #013399; padding: 20px; text-align: center; color: white; font-size: 14px;\">\n                        Copyright &copy; 2024 | Roomly.com.au\n                        </td>\n                    </tr>\n                </table>\n            </td>\n        </tr>\n    </table>\n</body>\n</html>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -320,
+        -40
+      ],
+      "id": "b07df025-d908-4c70-b495-8af64e2639c4",
+      "name": "send contract for sign",
+      "webhookId": "c2024bf2-3454-43a1-bbce-18a3fffbd220",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "I6AxSf6kS8kxT2iw",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "roomly-n8n",
+  "repo_owner": "roomly-ai",
+  "repo_path": "https://github.com/roomly-ai/roomly-n8n",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:contract_info": {},
+    "node:application": {},
+    "node:Airtable Trigger": {
+      "lastTimeChecked": "2025-01-21T02:31:17Z"
+    },
+    "node:Airtable Trigger1": {
+      "lastTimeChecked": "2025-01-21T02:31:17Z"
+    },
+    "node:new_kyc_record_added": {
+      "lastTimeChecked": "2025-01-21T15:41:17Z"
+    },
+    "node:new_application_record_added": {
+      "lastTimeChecked": "2025-01-21T15:41:18Z"
+    }
+  },
+  "tags": [],
+  "triggerCount": 2,
+  "updatedAt": "2025-01-22T07:31:59.000Z",
+  "versionId": "288d4ab7-a3bd-4693-8f28-b301d6bce4ce"
+}
