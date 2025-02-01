@@ -1,0 +1,1024 @@
+{
+  "active": false,
+  "connections": {
+    "Airtable Trigger": {
+      "main": [
+        [
+          {
+            "node": "find_dob",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "find_dob": {
+      "main": [
+        [
+          {
+            "node": "find_lease_start_date",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "find_lease_start_date": {
+      "main": [
+        [
+          {
+            "node": "update lease_bond_legal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update lease_bond_legal": {
+      "main": [
+        [
+          {
+            "node": "lodge bond with RTBA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-01-22T03:57:33.353Z",
+  "id": "UuDBm7mzMTHBaxUh",
+  "meta": null,
+  "name": "bond_paid",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "authentication": "airtableTokenApi",
+        "baseId": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "id"
+        },
+        "tableId": {
+          "__rl": true,
+          "value": "tblmvcxumTwiMgxmj",
+          "mode": "id"
+        },
+        "triggerField": "bond_paid",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtableTrigger",
+      "typeVersion": 1,
+      "position": [
+        -380,
+        -60
+      ],
+      "id": "754bb916-0216-4ad7-b3b3-3e6ea2304acc",
+      "name": "Airtable Trigger",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "list",
+          "cachedResultName": "roomly_dev",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblZIh52zo1Frq8k5",
+          "mode": "list",
+          "cachedResultName": "kyc_form",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG/tblZIh52zo1Frq8k5"
+        },
+        "filterByFormula": "={email} =  '{{ $json.fields[\"Email (from renter_email)\"][0] }}'",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -220,
+        -60
+      ],
+      "id": "d69e5ede-a834-40a9-b5d1-9911dc0db43b",
+      "name": "find_dob",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "list",
+          "cachedResultName": "roomly_dev",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblclUXRazaA8hnro",
+          "mode": "list",
+          "cachedResultName": "rental_application_form",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG/tblclUXRazaA8hnro"
+        },
+        "filterByFormula": "={Submission_ID} = '{{ $json.from_jotfom_application_submission_ID }}'",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -60,
+        -60
+      ],
+      "id": "779c5cf6-6e10-4379-8f1c-31f3a44009a6",
+      "name": "find_lease_start_date",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "list",
+          "cachedResultName": "roomly_dev",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblwRQEZWQVUSUlGt",
+          "mode": "list",
+          "cachedResultName": "lease_bond_legal",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG/tblwRQEZWQVUSUlGt"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "room_id": "={{ $('Airtable Trigger').item.json.fields.room_id }}",
+            "lease_start_date": "={{ $json[\"What's your commence date?\"].toDateTime().format('LLL-dd-yyyy') }}",
+            "lease_end_date": "={{ $json[\"What's your commence date?\"].toDateTime().plus(14,'weeks').format('LLL-dd-yyyy') }}",
+            "renter_1_full_name": "={{ $('find_dob').item.json.first_name.toUpperCase().concat(\" \",$('find_dob').item.json.last_name.toUpperCase()) }}",
+            "renter_1_first_name": "={{ $('find_dob').item.json.first_name.toUpperCase() }}",
+            "renter_1_last_name": "={{ $('find_dob').item.json.last_name.toUpperCase() }}",
+            "renter_1_dob": "={{ $('find_dob').item.json.date_of_birth.toDateTime().format('LLL-dd-yyyy') }}",
+            "renter_1_mobile": "={{ $('find_dob').item.json.mobile.replaceAll(\" \",\"\").replace(\"+61\",\"0\") }}",
+            "renter_1_email": "={{ $('find_dob').item.json.email }}"
+          },
+          "matchingColumns": [
+            "room_id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "room_id",
+              "displayName": "room_id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "roomly_code",
+              "displayName": "roomly_code",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "electricity",
+              "displayName": "electricity",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Included in the rent",
+                  "value": "Included in the rent"
+                },
+                {
+                  "name": "Split evenly between tenants",
+                  "value": "Split evenly between tenants"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "water",
+              "displayName": "water",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Included in the rent",
+                  "value": "Included in the rent"
+                },
+                {
+                  "name": "Split evenly between tenants",
+                  "value": "Split evenly between tenants"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "gas",
+              "displayName": "gas",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Included in the rent",
+                  "value": "Included in the rent"
+                },
+                {
+                  "name": "Split evenly between tenants",
+                  "value": "Split evenly between tenants"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "internet",
+              "displayName": "internet",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Included in the rent",
+                  "value": "Included in the rent"
+                },
+                {
+                  "name": "Split evenly between tenants",
+                  "value": "Split evenly between tenants"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "rent_payment_type",
+              "displayName": "rent_payment_type",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "fornight",
+                  "value": "fornight"
+                },
+                {
+                  "name": "week",
+                  "value": "week"
+                },
+                {
+                  "name": "month",
+                  "value": "month"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "payment_method",
+              "displayName": "payment_method",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "options": [
+                {
+                  "name": "direct debit",
+                  "value": "direct debit"
+                },
+                {
+                  "name": "bank deposit",
+                  "value": "bank deposit"
+                },
+                {
+                  "name": "cash",
+                  "value": "cash"
+                },
+                {
+                  "name": "cheque or money order",
+                  "value": "cheque or money order"
+                },
+                {
+                  "name": "BPAY",
+                  "value": "BPAY"
+                },
+                {
+                  "name": "other",
+                  "value": "other"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "payment_details",
+              "displayName": "payment_details",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "room_items",
+              "displayName": "room_items",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "details_extra",
+              "displayName": "details_extra",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "number_of_renters",
+              "displayName": "number_of_renters",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "bond_address",
+              "displayName": "bond_address",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "bond_received_date",
+              "displayName": "bond_received_date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "rtba_street_address",
+              "displayName": "rtba_street_address",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "707/639 Little Bourke Street",
+                  "value": "707/639 Little Bourke Street"
+                },
+                {
+                  "name": "414 Level 4/238 Flinders Street",
+                  "value": "414 Level 4/238 Flinders Street"
+                },
+                {
+                  "name": "903/488 Swanston Street",
+                  "value": "903/488 Swanston Street"
+                },
+                {
+                  "name": "967/488 Swanston Street",
+                  "value": "967/488 Swanston Street"
+                },
+                {
+                  "name": "862/488 Swanston Street",
+                  "value": "862/488 Swanston Street"
+                },
+                {
+                  "name": "3201/285 La Trobe Street",
+                  "value": "3201/285 La Trobe Street"
+                },
+                {
+                  "name": "812/639 Lonsdale Street",
+                  "value": "812/639 Lonsdale Street"
+                },
+                {
+                  "name": "1907/81 A'Beckett Street",
+                  "value": "1907/81 A'Beckett Street"
+                },
+                {
+                  "name": "2810/462 Elizabeth Street",
+                  "value": "2810/462 Elizabeth Street"
+                },
+                {
+                  "name": "613/112 A'Beckett Street",
+                  "value": "613/112 A'Beckett Street"
+                },
+                {
+                  "name": "9/392 Little Collins Street",
+                  "value": "9/392 Little Collins Street"
+                },
+                {
+                  "name": "5/51 Kavanagh Street",
+                  "value": "5/51 Kavanagh Street"
+                },
+                {
+                  "name": "713/58 Jeffcott Street",
+                  "value": "713/58 Jeffcott Street"
+                },
+                {
+                  "name": "4/11 Oxford Street",
+                  "value": "4/11 Oxford Street"
+                },
+                {
+                  "name": "1119/228 A'Beckett Street",
+                  "value": "1119/228 A'Beckett Street"
+                },
+                {
+                  "name": "1705/28 Bouverie Street",
+                  "value": "1705/28 Bouverie Street"
+                },
+                {
+                  "name": "2403/36 La Trobe Street",
+                  "value": "2403/36 La Trobe Street"
+                },
+                {
+                  "name": "909/22-24 Jane Bell Lane",
+                  "value": "909/22-24 Jane Bell Lane"
+                },
+                {
+                  "name": "1408/483 Swanston Street",
+                  "value": "1408/483 Swanston Street"
+                },
+                {
+                  "name": "814 Level 8/238 Flinders Street",
+                  "value": "814 Level 8/238 Flinders Street"
+                },
+                {
+                  "name": "619/228 A'Beckett Street",
+                  "value": "619/228 A'Beckett Street"
+                },
+                {
+                  "name": "2104/28 Bouverie Street",
+                  "value": "2104/28 Bouverie Street"
+                },
+                {
+                  "name": "3118/555 Swanston Street",
+                  "value": "3118/555 Swanston Street"
+                },
+                {
+                  "name": "1003/36 La Trobe Street",
+                  "value": "1003/36 La Trobe Street"
+                },
+                {
+                  "name": "608/228 A'Beckett Street",
+                  "value": "608/228 A'Beckett Street"
+                },
+                {
+                  "name": "903/81 A'Beckett Street",
+                  "value": "903/81 A'Beckett Street"
+                },
+                {
+                  "name": "2507/380 Little Lonsdale Street",
+                  "value": "2507/380 Little Lonsdale Street"
+                },
+                {
+                  "name": "1908/81 A'Beckett Street",
+                  "value": "1908/81 A'Beckett Street"
+                },
+                {
+                  "name": "2201/288 Spencer Street",
+                  "value": "2201/288 Spencer Street"
+                },
+                {
+                  "name": "1609/7 Katherine Place",
+                  "value": "1609/7 Katherine Place"
+                },
+                {
+                  "name": "801/28 Wills Street",
+                  "value": "801/28 Wills Street"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "rtba_suburb",
+              "displayName": "rtba_suburb",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "MELBOURNE",
+                  "value": "MELBOURNE"
+                },
+                {
+                  "name": "CARLTON ",
+                  "value": "CARLTON "
+                },
+                {
+                  "name": "SOUTHBANK",
+                  "value": "SOUTHBANK"
+                },
+                {
+                  "name": "WEST MELBOURNE",
+                  "value": "WEST MELBOURNE"
+                },
+                {
+                  "name": "NORTH MELBOURNE",
+                  "value": "NORTH MELBOURNE"
+                },
+                {
+                  "name": "CARLTON",
+                  "value": "CARLTON"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "rtba_state",
+              "displayName": "rtba_state",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "VIC",
+                  "value": "VIC"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "rtba_postcode",
+              "displayName": "rtba_postcode",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "rtba_premises_type",
+              "displayName": "rtba_premises_type",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "FLAT OR UNIT OR APARTMENT",
+                  "value": "FLAT OR UNIT OR APARTMENT"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "no_of_bdr",
+              "displayName": "no_of_bdr",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "weekly_rent",
+              "displayName": "weekly_rent",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "lease_start_date",
+              "displayName": "lease_start_date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "tenancy_period_weeks",
+              "displayName": "tenancy_period_weeks",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "lease_end_date",
+              "displayName": "lease_end_date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "contract_signed_date",
+              "displayName": "contract_signed_date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "landlord_mobile",
+              "displayName": "landlord_mobile",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "bond_amount",
+              "displayName": "bond_amount",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "lease_rent_amount",
+              "displayName": "lease_rent_amount",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "rent_payment_weekday",
+              "displayName": "rent_payment_weekday",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "2",
+                  "value": "2"
+                },
+                {
+                  "name": "6",
+                  "value": "6"
+                },
+                {
+                  "name": "4",
+                  "value": "4"
+                },
+                {
+                  "name": "7",
+                  "value": "7"
+                },
+                {
+                  "name": "5",
+                  "value": "5"
+                },
+                {
+                  "name": "#N/A",
+                  "value": "#N/A"
+                },
+                {
+                  "name": "1",
+                  "value": "1"
+                },
+                {
+                  "name": "3",
+                  "value": "3"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "lease_emergency_name",
+              "displayName": "lease_emergency_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Christopher Manie",
+                  "value": "Christopher Manie"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "lease_emergency_mobile",
+              "displayName": "lease_emergency_mobile",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "lease_emergency_email",
+              "displayName": "lease_emergency_email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "support@roomly.com.au",
+                  "value": "support@roomly.com.au"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "tenancy_type",
+              "displayName": "tenancy_type",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Fixed term agreement",
+                  "value": "Fixed term agreement"
+                },
+                {
+                  "name": "Periodic agreement (monthly)",
+                  "value": "Periodic agreement (monthly)"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "renter_1_full_name",
+              "displayName": "renter_1_full_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "renter_1_first_name",
+              "displayName": "renter_1_first_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "renter_1_last_name",
+              "displayName": "renter_1_last_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "renter_1_dob",
+              "displayName": "renter_1_dob",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "renter_1_mobile",
+              "displayName": "renter_1_mobile",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "renter_1_email",
+              "displayName": "renter_1_email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "unit_id",
+              "displayName": "unit_id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "rental_application_form",
+              "displayName": "rental_application_form",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "lease_rp",
+              "displayName": "lease_rp",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        120,
+        -60
+      ],
+      "id": "4fc67144-aabf-464d-a4fc-0f03660fd5fe",
+      "name": "update lease_bond_legal",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://roomlyapi-production.up.railway.app/lodge_bond",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "room_id",
+              "value": "={{ $json.fields.room_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        300,
+        -60
+      ],
+      "id": "582a7f29-b9e6-4454-90ce-bb1f8cac7a0d",
+      "name": "lodge bond with RTBA"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "roomly-n8n",
+  "repo_owner": "roomly-ai",
+  "repo_path": "https://github.com/roomly-ai/roomly-n8n",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-01-30T05:19:13.000Z",
+  "versionId": "775d9ff2-5bb1-4fe6-bdc4-d60a0057a41e"
+}
