@@ -599,6 +599,55 @@
     "callerPolicy": "workflowsFromSameOwner",
     "executionOrder": "v0"
   },
+  "shared": [
+    {
+      "createdAt": "2025-02-01T07:07:36.884Z",
+      "updatedAt": "2025-02-01T07:07:36.884Z",
+      "role": "workflow:owner",
+      "workflowId": "18nUhxIF8IMkX7Xq",
+      "projectId": "7FHVl3KliU2w1thC",
+      "project": {
+        "createdAt": "2024-12-02T13:53:12.568Z",
+        "updatedAt": "2024-12-02T13:53:14.245Z",
+        "id": "7FHVl3KliU2w1thC",
+        "name": "Liman Capital <limancapital@gmail.com>",
+        "type": "personal",
+        "projectRelations": [
+          {
+            "createdAt": "2024-12-02T13:53:12.569Z",
+            "updatedAt": "2024-12-02T13:53:12.569Z",
+            "role": "project:personalOwner",
+            "userId": "a96fbc37-00f2-4e7d-9516-138da321c748",
+            "projectId": "7FHVl3KliU2w1thC",
+            "user": {
+              "createdAt": "2024-12-02T13:53:10.219Z",
+              "updatedAt": "2025-01-20T05:25:46.679Z",
+              "id": "a96fbc37-00f2-4e7d-9516-138da321c748",
+              "email": "limancapital@gmail.com",
+              "firstName": "Liman",
+              "lastName": "Capital",
+              "personalizationAnswers": null,
+              "settings": {
+                "userActivated": true,
+                "firstSuccessfulWorkflowId": "7z1jVRcvwi0IUTzx",
+                "userActivatedAt": 1735283990141,
+                "npsSurvey": {
+                  "responded": true,
+                  "lastShownAt": 1737350743229
+                },
+                "isOnboarded": true
+              },
+              "role": "global:owner",
+              "disabled": false,
+              "mfaEnabled": false,
+              "isPending": false,
+              "isOwner": true
+            }
+          }
+        ]
+      }
+    }
+  ],
   "staticData": null,
   "tags": [
     {
