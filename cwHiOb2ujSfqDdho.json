@@ -48,7 +48,9 @@
   },
   "createdAt": "2025-01-08T01:36:11.033Z",
   "id": "cwHiOb2ujSfqDdho",
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "update_room_application_to_slack",
   "nodes": [
     {
@@ -75,7 +77,9 @@
           "cachedResultName": "room-applications"
         },
         "text": "=NEW APPLICATION RECEIVED\n<@U069X5AA5FA><@U06197A55H8><@U07KA2L0F0D><@U06197AJUJE>\nROOM: {{ $json.room_code.toUpperCase() }}\nEMPTY FROM: {{ $json.move_in_out_date }}\nMOVE-IN: {{ $('Prep_Fields').item.json[\"Move-in Date\"] }}\nNAME: {{ $('Prep_Fields').item.json.Name }}\nFROM: {{ $('Prep_Fields').item.json[\"Country of Origin\"] }}\nREFERRAL: {{ $('Prep_Fields').item.json.Referral }}\nDEGREE: {{ $('Prep_Fields').item.json.Degree }}\nWORK BEFORE: {{ $('Prep_Fields').item.json[\"Occupation Before \"] }}\nWORK AU: {{ $('Prep_Fields').item.json[\"Occupation in AU\"] }}",
-        "otherOptions": {}
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
       },
       "type": "n8n-nodes-base.slack",
       "typeVersion": 2.2,
@@ -263,6 +267,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-01-15T04:01:02.000Z",
-  "versionId": "5bcce051-28a7-42d2-b882-63ac68964158"
+  "updatedAt": "2025-02-04T10:32:31.000Z",
+  "versionId": "541c2c9f-5254-410c-98f4-b518e0df995f"
 }
