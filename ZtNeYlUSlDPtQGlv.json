@@ -1,12 +1,934 @@
 {
   "active": false,
-  "connections": {},
+  "connections": {
+    "bird_conversation": {
+      "main": [
+        [
+          {
+            "node": "message_translate_categorize",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "is_conversation.created": {
+      "main": [
+        [
+          {
+            "node": "find_channelId_airtableId",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "find_channelId_airtableId": {
+      "main": [
+        [
+          {
+            "node": "find_contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "find_contact": {
+      "main": [
+        [
+          {
+            "node": "update_bird_contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update_bird_contact": {
+      "main": [
+        [
+          {
+            "node": "find_pms_contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "find_pms_contact": {
+      "main": [
+        [
+          {
+            "node": "contact_in_pms",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "contact_in_pms": {
+      "main": [
+        [
+          {
+            "node": "find_in_birdId",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "find_in_birdId": {
+      "main": [
+        [
+          {
+            "node": "update_bird_id_in_PMS_contacts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "message_translate_categorize": {
+      "main": [
+        [
+          {
+            "node": "is_conversation.created",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update_bird_id_in_PMS_contacts": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "createdAt": "2025-01-25T08:55:25.807Z",
   "id": "ZtNeYlUSlDPtQGlv",
   "meta": null,
-  "name": "messagebird_auto_reply",
-  "nodes": [],
-  "pinData": {},
+  "name": "bird_auto_reply",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "50d180f4-3bf9-4f34-9690-52f34a683015",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -520,
+        -160
+      ],
+      "id": "91d0b3e3-306f-4bdd-9d19-943f2d6c72c6",
+      "name": "bird_conversation",
+      "webhookId": "50d180f4-3bf9-4f34-9690-52f34a683015"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "21306183-f4b1-407f-be9c-2bd226db3125",
+              "leftValue": "={{ $('bird_conversation').item.json.body.event }}",
+              "rightValue": "conversation.created",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -240,
+        -160
+      ],
+      "id": "10e72504-abe0-4a29-9c28-48ee1fe1a9a3",
+      "name": "is_conversation.created"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "list",
+          "cachedResultName": "roomly_dev",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblxu3VNoWRr7eE1j",
+          "mode": "list",
+          "cachedResultName": "bird_channels",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG/tblxu3VNoWRr7eE1j"
+        },
+        "filterByFormula": "={channelId} = '{{ $('bird_conversation').item.json.body.payload.channelId }}'",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -60,
+        -240
+      ],
+      "id": "4c001817-6873-4e56-ac53-325141fcde39",
+      "name": "find_channelId_airtableId",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "list",
+          "cachedResultName": "roomly_dev",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblzNre6pyxZLlj5Z",
+          "mode": "list",
+          "cachedResultName": "bird_other_contacts",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG/tblzNre6pyxZLlj5Z"
+        },
+        "filterByFormula": "={birdId} = '{{ $('bird_conversation').item.json.body.payload.initiatingParticipant.id }}'",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        80,
+        -240
+      ],
+      "id": "89497fa7-c730-4c41-b3de-c74969c56011",
+      "name": "find_contact",
+      "alwaysOutputData": true,
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "base": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "list",
+          "cachedResultName": "roomly_dev",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblzNre6pyxZLlj5Z",
+          "mode": "list",
+          "cachedResultName": "bird_contacts",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG/tblzNre6pyxZLlj5Z"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $json.id }}",
+            "birdId": "={{ $('message_translate_categorize').item.json.senderId }}",
+            "identifierKey": "={{ $('bird_conversation').item.json.body.payload.lastMessage.sender.contact.identifierKey }}",
+            "identifierValue": "={{ $('bird_conversation').item.json.body.payload.lastMessage.sender.contact.identifierValue }}",
+            "displayName": "={{ $('bird_conversation').item.json.body.payload.lastMessage.sender.displayName }}",
+            "primaryLanguage": "={{ $('message_translate_categorize').item.json.detectedLanguage }}",
+            "cateory": "={{ $('message_translate_categorize').item.json.category }}",
+            "status": "Active",
+            "channelId": "={{ $('find_contact').item.json.isEmpty()?[].append($('find_channelId_airtableId').item.json.id):($('find_contact').item.json.channelId.includes($('find_channelId_airtableId').item.json.id)?$json.channelId:$json.channelId.append($('find_channelId_airtableId').item.json.id)) }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "birdId",
+              "displayName": "birdId",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "identifierValue",
+              "displayName": "identifierValue",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "identifierKey",
+              "displayName": "identifierKey",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "displayName",
+              "displayName": "displayName",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "primaryLanguage",
+              "displayName": "primaryLanguage",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "en",
+                  "value": "en"
+                },
+                {
+                  "name": "zh-Hans",
+                  "value": "zh-Hans"
+                },
+                {
+                  "name": "zh-Hant",
+                  "value": "zh-Hant"
+                },
+                {
+                  "name": "es",
+                  "value": "es"
+                },
+                {
+                  "name": "hi",
+                  "value": "hi"
+                },
+                {
+                  "name": "ja",
+                  "value": "ja"
+                },
+                {
+                  "name": "ko",
+                  "value": "ko"
+                },
+                {
+                  "name": "fr",
+                  "value": "fr"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cateory",
+              "displayName": "cateory",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Potential Renter",
+                  "value": "Potential Renter"
+                },
+                {
+                  "name": "Potential Landlord",
+                  "value": "Potential Landlord"
+                },
+                {
+                  "name": "FAILED",
+                  "value": "FAILED"
+                },
+                {
+                  "name": "Existing Renter",
+                  "value": "Existing Renter"
+                },
+                {
+                  "name": "Past Renter",
+                  "value": "Past Renter"
+                },
+                {
+                  "name": "Existing Landlord",
+                  "value": "Existing Landlord"
+                },
+                {
+                  "name": "Past Landlord",
+                  "value": "Past Landlord"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Active",
+                  "value": "Active"
+                },
+                {
+                  "name": "Archieved",
+                  "value": "Archieved"
+                },
+                {
+                  "name": "Deleted",
+                  "value": "Deleted"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "channelId",
+              "displayName": "channelId",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Platform (from channelId)",
+              "displayName": "Platform (from channelId)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "pms_contacts",
+              "displayName": "pms_contacts",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        220,
+        -240
+      ],
+      "id": "a75ea96d-8f1a-48fd-81ee-ef23f2930691",
+      "name": "update_bird_contact",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "list",
+          "cachedResultName": "roomly_dev",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl7Szz7Es7xAss6L",
+          "mode": "list",
+          "cachedResultName": "pms_contacts",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG/tbl7Szz7Es7xAss6L"
+        },
+        "filterByFormula": "={Display name} = '{{ $json.fields.displayName }}'",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        380,
+        -240
+      ],
+      "id": "76af7e65-a428-4ef3-a905-485b7283d38a",
+      "name": "find_pms_contact",
+      "alwaysOutputData": true,
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5572d05b-3ccf-4075-b616-0901736d6559",
+              "leftValue": "={{ $('find_pms_contact').item.json.isEmpty() }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        520,
+        -240
+      ],
+      "id": "4a61986f-ad91-4806-9d64-5cc917cbb3d1",
+      "name": "contact_in_pms"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "list",
+          "cachedResultName": "roomly_dev",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl7Szz7Es7xAss6L",
+          "mode": "list",
+          "cachedResultName": "pms_contacts",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG/tbl7Szz7Es7xAss6L"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Display name": "={{ $json.displayName }}",
+            "bird_id": "={{ $('find_pms_contact').item.json.isEmpty()? [].append($json.id):($('find_pms_contact').item.json.keys().includes('bird_id')?$('find_pms_contact').item.json.bird_id:$('find_pms_contact').item.json.bird_id.append($json.id)) }}"
+          },
+          "matchingColumns": [
+            "Display name"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "user_id",
+              "displayName": "user_id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Display name",
+              "displayName": "Display name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "First name",
+              "displayName": "First name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Last name",
+              "displayName": "Last name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Phone",
+              "displayName": "Phone",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "mobile_roomly_formatted",
+              "displayName": "mobile_roomly_formatted",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "bird_id",
+              "displayName": "bird_id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "contract_signed",
+              "displayName": "contract_signed",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "move_in_out",
+              "displayName": "move_in_out",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        880,
+        -260
+      ],
+      "id": "04bd259c-c3e9-4037-beee-766ef53b5d6d",
+      "name": "update_bird_id_in_PMS_contacts",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "list",
+          "cachedResultName": "roomly_dev",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblzNre6pyxZLlj5Z",
+          "mode": "list",
+          "cachedResultName": "bird_contacts",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG/tblzNre6pyxZLlj5Z"
+        },
+        "filterByFormula": "={birdId} = '{{ $('bird_conversation').item.json.body.payload.lastMessage.sender.id }}'",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        720,
+        -260
+      ],
+      "id": "2715d8fd-46bb-42de-8ec1-ce319ddd9fac",
+      "name": "find_in_birdId",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "qJBMymL0okhntyuh",
+          "mode": "list",
+          "cachedResultName": "message_translate_and_categorize"
+        },
+        "mode": "each",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.1,
+      "position": [
+        -380,
+        -160
+      ],
+      "id": "6ef59dba-7479-4c69-96b8-ad3a527022b6",
+      "name": "message_translate_categorize"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C069M6B41NY",
+          "mode": "list",
+          "cachedResultName": "messagebird"
+        },
+        "text": "=",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        1060,
+        -60
+      ],
+      "id": "7915e194-d7c6-4ec5-aa41-64d1cca44f6d",
+      "name": "Slack",
+      "webhookId": "c84127c3-2954-4a47-b296-da4cccf9c4c0",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "vQp7BR45bihPVTtF",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "switch($('message_translate_categorize').first().json.category)) {\n  case \"Outbound\":\n    return \"📤|\"\n    // code block\n    break;\n  case \"Existing Renter\":\n    // code block\n    break;\n  case \"Potential Renter\":\n    // code block\n    break;\n  case \"Existing Landlord\":\n    // code block\n    break;\n  case \"Potential Landlord\":\n    // code block\n    break;\n  case \"Past Renter\":\n    // code block\n    break;\n  case \"Past Landlord\":\n    // code block\n    break;\n  default:\n    // code block\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        -260
+      ],
+      "id": "031df0f4-5dd5-4356-88de-87fa3964169a",
+      "name": "Code"
+    }
+  ],
+  "pinData": {
+    "bird_conversation": [
+      {
+        "json": {
+          "headers": {
+            "host": "liman.app.n8n.cloud",
+            "user-agent": "Messagebird/Requests v0.8.0",
+            "content-length": "1554",
+            "accept-encoding": "gzip, br",
+            "cdn-loop": "cloudflare; loops=1; subreqs=1",
+            "cf-connecting-ip": "18.203.71.233",
+            "cf-ew-via": "15",
+            "cf-ipcountry": "IE",
+            "cf-ray": "90c8e1da85bbbdb8-DUB",
+            "cf-visitor": "{\"scheme\":\"https\"}",
+            "cf-worker": "n8n.cloud",
+            "content-type": "application/json; charset=utf-8",
+            "messagebird-request-id": "0c206fba-2d6d-4c81-a247-de53895b1829",
+            "messagebird-request-timestamp": "1738653459",
+            "x-forwarded-for": "18.203.71.233, 162.158.6.34",
+            "x-forwarded-host": "liman.app.n8n.cloud",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "traefik-prod-users-gwc-7-c479b4d45-dzmpm",
+            "x-is-trusted": "yes",
+            "x-real-ip": "18.203.71.233"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "service": "conversations",
+            "event": "conversation.created",
+            "payload": {
+              "id": "e9b68881-9091-4206-8ff0-53a862810bcc",
+              "name": "",
+              "description": "",
+              "status": "active",
+              "visibility": "private",
+              "accessibility": "invite-only",
+              "featuredParticipants": [
+                {
+                  "id": "ead8e4ff-04e2-4289-ae67-aa85379a4f33",
+                  "type": "contact",
+                  "status": "active",
+                  "displayName": "Applied Potential Tenant",
+                  "avatarUrl": "",
+                  "contact": {
+                    "identifierKey": "phonenumber",
+                    "identifierValue": "+61403536149",
+                    "platformAddressSelector": "identifiers.phonenumber",
+                    "platformAddress": "+61403536149"
+                  }
+                }
+              ],
+              "activeParticipantCount": 1,
+              "pendingParticipantCount": 0,
+              "initiatingParticipant": {
+                "id": "ead8e4ff-04e2-4289-ae67-aa85379a4f33",
+                "type": "contact",
+                "status": "active",
+                "displayName": "E_R_AUMEL-FLI238-814-1_20250120",
+                "avatarUrl": "",
+                "contact": {
+                  "identifierKey": "phonenumber",
+                  "identifierValue": "+61403536149",
+                  "platformAddressSelector": "identifiers.phonenumber",
+                  "platformAddress": "+61403536149"
+                }
+              },
+              "channelId": "13f01ec9-0e33-5988-841f-70d9e9f2bc3e",
+              "lastMessage": {
+                "id": "13702162-4c49-47a6-b8e2-fe46efea28fd",
+                "type": "text",
+                "preview": {
+                  "text": "Hi roomly "
+                },
+                "recipients": null,
+                "status": "delivered",
+                "sender": {
+                  "id": "ead8e4ff-04e2-4289-ae67-aa85379a4f33",
+                  "type": "contact",
+                  "status": "active",
+                  "displayName": "E_R_AUMEL-FLI238-814-1_20250120",
+                  "avatarUrl": "",
+                  "contact": {
+                    "identifierKey": "phonenumber",
+                    "identifierValue": "+61403536149",
+                    "platformAddressSelector": "identifiers.phonenumber",
+                    "platformAddress": "+61403536149"
+                  }
+                },
+                "createdAt": "2025-02-04T07:17:39.408Z"
+              },
+              "createdAt": "2025-02-04T07:14:48.285Z",
+              "updatedAt": "2025-02-04T07:17:39.416Z",
+              "platformStyle": "direct"
+            }
+          },
+          "webhookUrl": "https://liman.app.n8n.cloud/webhook-test/50d180f4-3bf9-4f34-9690-52f34a683015",
+          "executionMode": "test"
+        }
+      }
+    ]
+  },
   "repo_name": "roomly-n8n",
   "repo_owner": "roomly-ai",
   "repo_path": "https://github.com/roomly-ai/roomly-n8n",
@@ -16,6 +938,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-01-25T08:55:25.807Z",
-  "versionId": "496003cc-d214-4073-b2b7-e46bb5697257"
+  "updatedAt": "2025-02-04T08:49:32.000Z",
+  "versionId": "02698944-024e-4f92-ab42-4ed733a73d8e"
 }
