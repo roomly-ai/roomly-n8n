@@ -1,0 +1,576 @@
+{
+  "active": false,
+  "connections": {
+    "messagebird_message_action": {
+      "main": [
+        [
+          {
+            "node": "Limit_to_1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit_to_1": {
+      "main": [
+        [
+          {
+            "node": "find_contact_via_thread_id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "find_contact_via_thread_id": {
+      "main": [
+        [
+          {
+            "node": "conId-whatsapp-check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create_new_message_in_conversation": {
+      "main": [
+        [
+          {
+            "node": "if_error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "if_error": {
+      "main": [
+        [
+          {
+            "node": "Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "conId-whatsapp-check": {
+      "main": [
+        [
+          {
+            "node": "get_Latest_100_messages_in_con",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "create_new_message_in_conversation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        []
+      ]
+    },
+    "get_Latest_100_messages_in_con": {
+      "main": [
+        [
+          {
+            "node": "get_latest_received_message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_latest_received_message": {
+      "main": [
+        [
+          {
+            "node": "check_if_in_24_hours_window",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "check_if_in_24_hours_window": {
+      "main": [
+        [
+          {
+            "node": "create_new_message_in_conversation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "send_template_message_to_whatsapp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-02-05T08:25:44.615Z",
+  "id": "hwHGu7R6vCYKqLsv",
+  "meta": null,
+  "name": "slack_to_bird",
+  "nodes": [
+    {
+      "parameters": {
+        "trigger": [
+          "message"
+        ],
+        "channelId": {
+          "__rl": true,
+          "value": "C069M6B41NY",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.slackTrigger",
+      "typeVersion": 1,
+      "position": [
+        -620,
+        -80
+      ],
+      "id": "55cf9e4c-5aa5-4ef9-8bc7-19271fe2e6d4",
+      "name": "messagebird_message_action",
+      "webhookId": "d7c733b1-6cfa-4a4a-8cf9-c1b36e7760b3",
+      "credentials": {
+        "slackApi": {
+          "id": "rnkKwXNnDLw2M1e8",
+          "name": "slack_trigger_credential"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        -460,
+        -80
+      ],
+      "id": "18f91d29-af5e-4db9-84b2-a00bde5c5c44",
+      "name": "Limit_to_1"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appHspa8r1AOafimG",
+          "mode": "list",
+          "cachedResultName": "roomly_dev",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblzNre6pyxZLlj5Z",
+          "mode": "list",
+          "cachedResultName": "bird_contacts",
+          "cachedResultUrl": "https://airtable.com/appHspa8r1AOafimG/tblzNre6pyxZLlj5Z"
+        },
+        "filterByFormula": "={slack_thread_id} = '{{ $json.thread_ts }}'",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -300,
+        -80
+      ],
+      "id": "224f42df-720c-4bff-8429-576bdc074489",
+      "name": "find_contact_via_thread_id",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "pI7HSx0dRCG9rXzw",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.bird.com/workspaces/2a3cf75b-1b9d-477d-9cbd-5ac0dbef8bc1/flows/9fa96ab2-f78b-4a64-99f8-18aa897adc72/invoke-sync",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "con_id",
+              "value": "={{ $('find_contact_via_thread_id').item.json.con_id }}"
+            },
+            {
+              "name": "message",
+              "value": "={{ $('messagebird_message_action').first().json.blocks[0].elements[0].elements[0].text }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        140,
+        -80
+      ],
+      "id": "fdb12b0a-8dfc-4790-a327-b9865e93ee07",
+      "name": "create_new_message_in_conversation",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e48bf2f3-e53b-40aa-9a48-0e5d06d85b26",
+              "leftValue": "={{ $('create_new_message_in_conversation').item.json.statusCode }}",
+              "rightValue": 201,
+              "operator": {
+                "type": "number",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        300,
+        -80
+      ],
+      "id": "9e5c1f61-0001-446a-84c0-98459050a694",
+      "name": "if_error"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C08BAHHF490",
+          "mode": "list",
+          "cachedResultName": "tech-related"
+        },
+        "text": "❌ Slack to Messagebird sending ERROR",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        480,
+        -200
+      ],
+      "id": "ae48b6b7-ddf0-4da2-922b-342f8e5bf02c",
+      "name": "Slack",
+      "webhookId": "402224fa-9311-4ca7-a645-be2edde1e791",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "vQp7BR45bihPVTtF",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## \nCreate a new messagebird conversation for this contact\n",
+        "height": 200,
+        "width": 620
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        120,
+        120
+      ],
+      "typeVersion": 1,
+      "id": "af42e864-5a80-46b2-8605-e137d2087cb6",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "c46d16e5-f435-42bd-a143-3c8fc973cdeb",
+                    "leftValue": "={{ $json[\"Platform (from channelId)\"][0] }}",
+                    "rightValue": "Whatsapp",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Whatsapp"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.con_id.isNotEmpty() &&  $json[\"Platform (from channelId)\"] != \"Whatsapp\"}}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "conId-Not-Whatsapp"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "9f9d0604-52cd-4862-bb7e-7fcd080bff1f",
+                    "leftValue": "={{ $json.con_id.isEmpty() }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "no_conId"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -120,
+        -80
+      ],
+      "id": "2c74cc71-472e-42b2-a997-4cb218a4152d",
+      "name": "conId-whatsapp-check"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -620,
+        -320
+      ],
+      "id": "b54f9735-e00e-49fb-9919-900e3a184ace",
+      "name": "When clicking ‘Test workflow’",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.bird.com/workspaces/2a3cf75b-1b9d-477d-9cbd-5ac0dbef8bc1/flows/9c135164-140c-407e-8ff6-eeb48eb9d799/invoke-sync",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "con_id",
+              "value": "7a3b3af5-d2e1-4d09-a4d2-0c81c8287de7"
+            },
+            {
+              "name": "sender_id",
+              "value": "339dc183-bd12-4f6e-a787-bff6cf38258f"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -380,
+        -300
+      ],
+      "id": "6f9d851d-83cb-440c-8172-71d3d4f03eec",
+      "name": "get_Latest_100_messages_in_con"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst parsedItems = items.map((item) => JSON.parse(item?.json?.data));\n\n// return parsedItems[0].result.results\nconst filteredItems = parsedItems[0].result?.results?.filter(\n  (result) => result?.sender?.id === \"339dc183-bd12-4f6e-a787-bff6cf38258f\",\n);\n\nif (Array.isArray(filteredItems)) {\n  return filteredItems.map(filteredItem => ({ json: filteredItem }))[0];\n}\n\nreturn [];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -220,
+        -300
+      ],
+      "id": "a29241d8-9139-4086-a72a-cf73b735a0f4",
+      "name": "get_latest_received_message"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "1c797986-4db3-458a-9d6f-6c68b8314af6",
+              "leftValue": "={{ $json.updatedAt.toDateTime().plus(24,'hours') }}",
+              "rightValue": "={{ $now }}",
+              "operator": {
+                "type": "dateTime",
+                "operation": "after"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -20,
+        -300
+      ],
+      "id": "f154984e-b8b6-480e-b99e-ce9b85cfa01a",
+      "name": "check_if_in_24_hours_window"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.bird.com/workspaces/2a3cf75b-1b9d-477d-9cbd-5ac0dbef8bc1/flows/9fa96ab2-f78b-4a64-99f8-18aa897adc72/invoke-sync",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "con_id",
+              "value": "={{ $json.con_id }}"
+            },
+            {
+              "name": "message",
+              "value": "Dear "
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        180,
+        -280
+      ],
+      "id": "0a25d1e1-6e42-4414-b664-85861f8fba79",
+      "name": "send_template_message_to_whatsapp"
+    }
+  ],
+  "pinData": {
+    "messagebird_message_action": [
+      {
+        "json": {
+          "user": "U06197A55H8",
+          "type": "message",
+          "ts": "1738745692.128719",
+          "client_msg_id": "771b8fd8-8543-45d3-bfc3-2b43a3888706",
+          "text": "Yes we have 10 rooms available in Melbourne CBD , do you want the list?",
+          "team": "T01LLG1JD6G",
+          "thread_ts": "1738743066.534859",
+          "parent_user_id": "U087UCUSTUM",
+          "blocks": [
+            {
+              "type": "rich_text",
+              "block_id": "RZG6S",
+              "elements": [
+                {
+                  "type": "rich_text_section",
+                  "elements": [
+                    {
+                      "type": "text",
+                      "text": "Yes we have 10 rooms available in Melbourne CBD , do you want the list?"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "channel": "C069M6B41NY",
+          "event_ts": "1738745692.128719",
+          "channel_type": "channel"
+        }
+      }
+    ]
+  },
+  "repo_name": "roomly-n8n",
+  "repo_owner": "roomly-ai",
+  "repo_path": "https://github.com/roomly-ai/roomly-n8n",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-02-05T15:46:18.000Z",
+  "versionId": "dc46eab2-45ba-49c3-b133-64cd9c09bb1e"
+}
