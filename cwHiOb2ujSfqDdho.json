@@ -76,7 +76,7 @@
           "mode": "list",
           "cachedResultName": "room-applications"
         },
-        "text": "=NEW APPLICATION RECEIVED\n<@U069X5AA5FA><@U06197A55H8><@U07KA2L0F0D><@U06197AJUJE>\nROOM: {{ $json.room_code.toUpperCase() }}\nEMPTY FROM: {{ $json.move_in_out_date }}\nMOVE-IN: {{ $('Prep_Fields').item.json[\"Move-in Date\"] }}\nNAME: {{ $('Prep_Fields').item.json.Name }}\nFROM: {{ $('Prep_Fields').item.json[\"Country of Origin\"] }}\nREFERRAL: {{ $('Prep_Fields').item.json.Referral }}\nDEGREE: {{ $('Prep_Fields').item.json.Degree }}\nWORK BEFORE: {{ $('Prep_Fields').item.json[\"Occupation Before \"] }}\nWORK AU: {{ $('Prep_Fields').item.json[\"Occupation in AU\"] }}",
+        "text": "=NEW APPLICATION RECEIVED\n<@U06BUBZRK5X><@U069X5AA5FA><@U06197A55H8><@U06197AJUJE>\nROOM: {{ $json.room_code.toUpperCase() }}\nEMPTY FROM: {{ $json.move_in_out_date }}\nMOVE-IN: {{ $('Prep_Fields').item.json[\"Move-in Date\"] }}\nNAME: {{ $('Prep_Fields').item.json.Name }}\nFROM: {{ $('Prep_Fields').item.json[\"Country of Origin\"] }}\nREFERRAL: {{ $('Prep_Fields').item.json.Referral }}\nDEGREE: {{ $('Prep_Fields').item.json.Degree }}\nWORK BEFORE: {{ $('Prep_Fields').item.json[\"Occupation Before \"] }}\nWORK AU: {{ $('Prep_Fields').item.json[\"Occupation in AU\"] }}",
         "otherOptions": {
           "includeLinkToWorkflow": false
         }
@@ -232,7 +232,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
       "position": [
-        200,
+        180,
         -60
       ],
       "id": "e05b7a09-2e46-46cf-a495-d7aa8a6576c9",
@@ -262,11 +262,11 @@
     "node:new application submitted": {
       "documentId": "1DUPS2CFrRNUaQGdpwEVZ84qAQ4uWGry4pmNy6I0XQuk",
       "sheetId": 1001808731,
-      "lastIndexChecked": 369
+      "lastIndexChecked": 370
     }
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-02-04T10:32:31.000Z",
-  "versionId": "541c2c9f-5254-410c-98f4-b518e0df995f"
+  "updatedAt": "2025-02-18T06:03:12.000Z",
+  "versionId": "263a0d73-d873-4464-a68f-5d826ba2b144"
 }
