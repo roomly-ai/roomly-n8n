@@ -1,11 +1,11 @@
 {
-  "active": true,
+  "active": false,
   "connections": {
     "Gmail Trigger": {
       "main": [
         [
           {
-            "node": "Filter",
+            "node": "Execute Workflow1",
             "type": "main",
             "index": 0
           }
@@ -65,6 +65,153 @@
           }
         ]
       ]
+    },
+    "accounts": {
+      "main": [
+        [
+          {
+            "node": "download-attachment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "download-attachment": {
+      "main": [
+        [
+          {
+            "node": "has-attachements",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "has-attachements": {
+      "main": [
+        [
+          {
+            "node": "forward-directly-with-attach1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "OpenAI1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI1": {
+      "main": [
+        [
+          {
+            "node": "download-through-url",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Gmail1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail1": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "download-through-url": {
+      "main": [
+        [
+          {
+            "node": "has-binary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "has-binary": {
+      "main": [
+        [
+          {
+            "node": "forward-directly-with-attach2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "forward-directly-with-attach",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-01-08T04:23:21.042Z",
@@ -85,13 +232,15 @@
         },
         "simple": false,
         "filters": {},
-        "options": {}
+        "options": {
+          "downloadAttachments": false
+        }
       },
       "type": "n8n-nodes-base.gmailTrigger",
       "typeVersion": 1.2,
       "position": [
-        -440,
-        0
+        -500,
+        -380
       ],
       "id": "ffffa844-3ed7-4ca2-a3ad-9b645d3cc5c9",
       "name": "Gmail Trigger",
@@ -118,8 +267,7 @@
               "rightValue": "ada1234.li@gmail.com",
               "operator": {
                 "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
+                "operation": "equals"
               }
             }
           ],
@@ -130,7 +278,7 @@
       "type": "n8n-nodes-base.filter",
       "typeVersion": 2.2,
       "position": [
-        -280,
+        -380,
         0
       ],
       "id": "e9aeebd6-d402-4d39-b22b-566e796a5156",
@@ -147,11 +295,11 @@
         "messages": {
           "values": [
             {
-              "content": "=Your task is to summarize email content forwarded from a email account. You will receive requests about reminder of payment, inspection request or request of service.Analyze the content and prepare a summary report. It should contain an overall sentiment regarding the event, category of the request and summary of the content.\nReply in Markdown formatting\nSummary is not more than 50 words\nCategory to service requet, payment reminder or routine inspection only, if can not categorize then set category as unknown\nservice request generally include keyword like smoke alarm service etc.",
+              "content": "=Your task is to summarize email content forwarded from a email account. You will receive requests about reminder of payment, inspection request or request of service.Analyze the content and prepare a summary report. It should contain an overall sentiment regarding the event, category of the request and summary of the content.\nReply in Markdown formatting\nsummary is not more than 50 words\ncategory to service requet, payment reminder or routine inspection only, if can not categorize then set category as unknown\nservice request generally include keyword like smoke alarm service etc.\nkeep everything lower case",
               "role": "system"
             },
             {
-              "content": "=Sentiment, Category and Summary of the content:\n{{ $json.text }}"
+              "content": "=sentiment, categoy and summary of the content:\n{{ $json.text }}"
             }
           ]
         },
@@ -161,7 +309,7 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.7,
       "position": [
-        -120,
+        -220,
         0
       ],
       "id": "c132d4f9-f55d-48aa-bd05-10bdc4a0c59e",
@@ -222,8 +370,7 @@
                 ],
                 "combinator": "and"
               },
-              "renameOutput": true,
-              "outputKey": "accounts"
+              "renameOutput": "=accounts"
             },
             {
               "conditions": {
@@ -237,7 +384,7 @@
                   {
                     "id": "6bb36d51-d0a7-4f12-9429-b169214b06f8",
                     "leftValue": "={{ $json.message.content.category }}",
-                    "rightValue": "inspection request",
+                    "rightValue": "routine inspection",
                     "operator": {
                       "type": "string",
                       "operation": "equals",
@@ -260,20 +407,19 @@
                 },
                 "conditions": [
                   {
-                    "id": "bad8605e-a87e-422c-a5fa-42e589983522",
+                    "id": "8c538c11-4803-491c-a0d2-f988edd7ea74",
                     "leftValue": "={{ $json.message.content.category }}",
-                    "rightValue": "unknown",
+                    "rightValue": "=OR(\"routine inspection\" | \"payment reminder\" | \"routine inspection\")",
                     "operator": {
                       "type": "string",
-                      "operation": "equals",
-                      "name": "filter.operator.equals"
+                      "operation": "notContains"
                     }
                   }
                 ],
                 "combinator": "and"
               },
               "renameOutput": true,
-              "outputKey": "unkown"
+              "outputKey": "others"
             }
           ]
         },
@@ -284,8 +430,8 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        180,
-        0
+        100,
+        -20
       ],
       "id": "09fa94b8-4474-42a4-985a-caf1eabdcf70",
       "name": "Switch"
@@ -331,7 +477,7 @@
           "mode": "list",
           "cachedResultName": "accounts"
         },
-        "text": "=NEW {{ $json.message.content.category }}\n<@U069X5AA5FA><@U06197AJUJE>\nNew email forwarded to support@roomly.com.au, \nsentiment: {{ $json.message.content.sentiment }}\ntitle: {{ $('Gmail Trigger').item.json.subject }}\nsummary: {{ $json.message.content.summary }}\n\nKindly make payment for completion of task",
+        "text": "=NEW {{ $json.message.content.category }}\n<@U069X5AA5FA><@U06197AJUJE>\nNew email forwarded to support@roomly.com.au, \nsentiment: {{ $json.message.content.sentiment }}\ntitle: {{ $('Execute Workflow Trigger').item.json.subject }}\nsummary: {{ $json.message.content.summary }}\n\nKindly make payment for completion of task, invoice/receipt has uploaded to hubdoc",
         "otherOptions": {
           "includeLinkToWorkflow": false
         }
@@ -340,7 +486,7 @@
       "typeVersion": 2.2,
       "position": [
         380,
-        -60
+        -40
       ],
       "id": "72921dd4-4bf0-44ac-abae-73035f563abf",
       "name": "accounts",
@@ -413,6 +559,354 @@
           "name": "Slack account"
         }
       }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "messageId": "={{ $('Execute Workflow Trigger').item.json.id }}",
+        "simple": false,
+        "options": {
+          "downloadAttachments": true
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        560,
+        -40
+      ],
+      "id": "9a438deb-7360-4605-a779-43899bd0bf24",
+      "name": "download-attachment",
+      "webhookId": "5c8afecd-8ffa-404d-bf7e-3e9f3cab4c81",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "I6AxSf6kS8kxT2iw",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "aa3478a3-e8f5-4c44-b3c8-17e111744efc",
+              "leftValue": "={{ $('download-attachment').item.binary }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        740,
+        -40
+      ],
+      "id": "61815fe0-f7ac-43c6-9677-794e1a3ffb8c",
+      "name": "has-attachements"
+    },
+    {
+      "parameters": {
+        "sendTo": "roomly.74b7@app.hubdoc.com",
+        "subject": "={{ $('download-attachment').item.json.subject }}",
+        "message": "={{ $('download-attachment').item.json.textAsHtml }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1560,
+        140
+      ],
+      "id": "3fd22342-7340-47b2-920a-ae461a5fb280",
+      "name": "forward-directly-with-attach",
+      "webhookId": "9728164b-1962-4e59-bd55-b431c7c30e27",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "I6AxSf6kS8kxT2iw",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Your task is to attract the links related to download bills. the link should has a name like \"View my bill\", \"view my rate\", \"download the bill\" etc. avoid link texts like \"pay now\", \"pay my rate online\",\"view my account\"\nReply in Markdown formatting in the following struction\n{ \n\"text\": \"link text\",\n\"url\": \"link iteself\"\n}",
+              "role": "system"
+            },
+            {
+              "content": "=Sentiment, Category and Summary of the content:\n{{ $json.text }}"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.7,
+      "position": [
+        900,
+        60
+      ],
+      "id": "c669c23b-f868-43e9-91a8-c623e6b141b7",
+      "name": "OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "ASOiAIC6Muob4zyk",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        200,
+        -340
+      ],
+      "id": "e373963b-6342-476f-9176-9a9f8025c9bd",
+      "name": "When clicking ‘Test workflow’",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "limit": 10,
+        "filters": {
+          "sender": "ada1234.li@gmail.com"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        400,
+        -340
+      ],
+      "id": "265ff0b8-ee9c-4adc-9a97-dfe6106e254b",
+      "name": "Gmail",
+      "webhookId": "d6468f43-1e3e-4f0e-b293-0ec356bd25ec",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "I6AxSf6kS8kxT2iw",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "UyJ7wxnEYDFDZBeI",
+          "mode": "list",
+          "cachedResultName": "forward_work_email_and_post_on_slack"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.1,
+      "position": [
+        960,
+        -260
+      ],
+      "id": "2fa31519-1279-4be0-b4ac-96b6b28ab844",
+      "name": "Execute Workflow"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        -540,
+        0
+      ],
+      "id": "0394b057-3f0d-48c9-bf3c-af5150d2af3a",
+      "name": "Execute Workflow Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "messageId": "={{ $json.id }}",
+        "simple": false,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        800,
+        -260
+      ],
+      "id": "60f3e290-1b9b-4bc7-884c-2e192262b272",
+      "name": "Gmail1",
+      "webhookId": "e08ddd8a-9a49-4ae9-81eb-b5fae7a7614c",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "I6AxSf6kS8kxT2iw",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        600,
+        -340
+      ],
+      "id": "0c85b636-a880-47fe-b527-92e41173c572",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "UyJ7wxnEYDFDZBeI",
+          "mode": "list",
+          "cachedResultName": "forward_work_email_and_post_on_slack"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.1,
+      "position": [
+        -300,
+        -380
+      ],
+      "id": "dc23fa61-a273-4d88-af7e-2dd4b9f452da",
+      "name": "Execute Workflow1"
+    },
+    {
+      "parameters": {
+        "sendTo": "roomly.74b7@app.hubdoc.com",
+        "subject": "={{ $('download-attachment').item.json.subject }}",
+        "message": "={{ $('download-attachment').item.json.textAsHtml }}",
+        "options": {
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {
+                "property": "={{ $('has-attachements').item.binary.keys().join(\",\") }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1360,
+        -100
+      ],
+      "id": "271a3fce-7cea-4ec4-80c0-1f6db3c51f66",
+      "name": "forward-directly-with-attach1",
+      "webhookId": "9728164b-1962-4e59-bd55-b431c7c30e27",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "I6AxSf6kS8kxT2iw",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.message.content.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1200,
+        60
+      ],
+      "id": "951e081c-6e3d-4c72-954e-80d05a370185",
+      "name": "download-through-url"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "92515cbe-109c-4646-972a-007ad82ccd45",
+              "leftValue": "={{ $('download-through-url').item.keys().includes('binary') }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1360,
+        60
+      ],
+      "id": "d4aa0e50-fb6b-4c32-bcdf-30a47c6b4a17",
+      "name": "has-binary"
+    },
+    {
+      "parameters": {
+        "sendTo": "roomly.74b7@app.hubdoc.com",
+        "subject": "={{ $('download-attachment').item.json.subject }}",
+        "message": "={{ $('download-attachment').item.json.textAsHtml }}",
+        "options": {
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {}
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1560,
+        -40
+      ],
+      "id": "3c8fe68d-0d54-43ad-aac3-04a912053a00",
+      "name": "forward-directly-with-attach2",
+      "webhookId": "9728164b-1962-4e59-bd55-b431c7c30e27",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "I6AxSf6kS8kxT2iw",
+          "name": "Gmail account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -425,16 +919,15 @@
   "staticData": {
     "node:Gmail Trigger": {
       "Gmail Trigger": {
-        "lastTimeChecked": 1740068601,
+        "lastTimeChecked": 1740109265,
         "possibleDuplicates": [
-          "195242bc26b05409",
-          "19522c0f6f889f6c"
+          "19526983d1e282cd"
         ]
       }
     }
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-02-04T10:33:05.000Z",
-  "versionId": "f71039a3-8582-4d20-bcb1-108a5ae8fdf3"
+  "updatedAt": "2025-02-21T14:38:16.000Z",
+  "versionId": "d51f2304-31b4-460e-9da0-6ee033f4512c"
 }
