@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "Gmail Trigger": {
       "main": [
@@ -694,7 +694,7 @@
     {
       "parameters": {
         "operation": "getAll",
-        "limit": 10,
+        "limit": 2,
         "filters": {
           "sender": "ada1234.li@gmail.com"
         }
@@ -919,15 +919,17 @@
   "staticData": {
     "node:Gmail Trigger": {
       "Gmail Trigger": {
-        "lastTimeChecked": 1740109265,
+        "lastTimeChecked": 1740221400,
         "possibleDuplicates": [
-          "19526983d1e282cd"
+          "1952d4747533f5db",
+          "1952d47472be19aa",
+          "1952d41e8cd4de47"
         ]
       }
     }
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-02-21T14:38:16.000Z",
-  "versionId": "d51f2304-31b4-460e-9da0-6ee033f4512c"
+  "updatedAt": "2025-02-22T08:44:51.000Z",
+  "versionId": "1faa9517-f447-40fc-b6f3-a783d17bb58b"
 }
